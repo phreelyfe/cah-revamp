@@ -1,0 +1,23 @@
+{
+  "name": "bigger-blacker-app",
+  "description": "Cards Against Humanity The App",
+  "main": "server.js",
+  "authors": [
+    "TechNinja"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/phreelyfe/cah-revamp",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "~0.2.13",
+    "angular-socket-io": "~0.7.0"
+  }
+}
