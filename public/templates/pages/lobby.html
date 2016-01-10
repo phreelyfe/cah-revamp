@@ -1,0 +1,20 @@
+<div class="container">
+    <h3 class="title">The Bigger <br>Blacker<br>App</h3>
+    <div class="player-list">
+        <ul class="ready-list">
+            <li data-ng-repeat="player in players" class="col-sm-4">
+                <div class="profile-halo-md active"><img class="profile-pic" src="http://pickaface.net/includes/themes/clean/img/slide2.png" /></div>
+                <div class="username">{{ player.username }}</div>
+            </li>
+        </ul>
+    </div>
+    <div class="clear-fix"></div>
+    <div class="waiting-for-players" is-ready="ready" data-ng-hide="isReady()">
+    	Waiting for {{ (game.maxPlayers - players.length) }} more players to join ... <span class="playerCount"></span>
+    </div>
+    <div class="waiting-for-players" data-ng-show="isReady()">
+    	Ready To Start Game  <span class="playerCount"></span>
+    </div>
+    <div class="leave-game primary-button" data-ng-click="leaveGame( game )">Leave Game</div>
+    <div class="start-game primary-button" data-ng-show="creatorIsReady()" data-ng-click="start()">Start Game</div>
+</div>

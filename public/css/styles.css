@@ -1,0 +1,744 @@
+@import url(//fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
+/* */
+
+html,
+body {
+    background: #222;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0;
+    overflow: hidden;
+    color: #fff;
+}
+
+h3 {
+    margin: 0 0 20px 0;
+    display: block;
+}
+
+h1,
+p,
+div,
+input {
+    font-family: 'Ubuntu';
+}
+
+a,
+a:hover,
+a:visited,
+a:focus {
+    text-decoration: none;
+    color: white;
+}
+
+ul {
+    padding: 0px;
+    margin: 5px;
+}
+
+#status-message {
+    position: absolute;
+    top: 25%;
+    left: 0px;
+    width: 100%;
+    margin: 0 auto;
+    z-index: 0;
+    text-align: center;
+}
+
+.container {
+    overflow-y: scroll;
+    position: relative;
+    margin-top: 20px;
+    height: 100%;
+}
+
+.button {
+    padding: 5px 20px;
+    background: #333;
+    color: #fff;
+    margin: 5px;
+    width: 100px;
+    display: inline-block;
+    text-align: center;
+    text-shadow: none;
+}
+/*
+#player {
+    width: 280px;
+    margin: auto !important;
+    display: block;
+    height: 400px;
+    position: relative;
+    list-style-type: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.card {
+    display: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 85%;
+    height: 360px;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    cursor: hand;
+}
+.active{
+    display:block;
+}
+.inactive{
+    display:none;
+}
+
+.card .value {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    top: 25%;
+    text-shadow: none;
+}
+
+.card .card-num {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 10px;
+}
+
+.white {
+    background: #fff;
+    color: #333;
+    box-shadow: inset 0px 0px 100px rgba(0, 0, 0, 0.10);
+    border: 1px solid #e1e1e1;
+}
+
+.black {
+    background: #222;
+    color: #fff;
+    box-shadow: inset 0px 0px 100px rgba(0, 0, 0, 0.30);
+    border: 1px solid #e1e1e1;
+}
+
+.selected {
+    content: url("http://d1ylr6sba64qi3.cloudfront.net/cyri/assets/images/green_checkmark_small.gif");
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.rotate-left {
+    transform: rotate(30deg) scale(0.8);
+    transition: 1s;
+    margin-left: 400px;
+    cursor: e-resize;
+    opacity: 0;
+}
+
+.rotate-right {
+    transform: rotate(-30deg) scale(0.8);
+    transition: 1s;
+    opacity: 0;
+    margin-left: -400px;
+    cursor: w-resize;
+}
+
+.flick-submit {
+    transform: rotate(-30deg) scale(0.8);
+    transition: 1s;
+    opacity: 0;
+    margin-top: -800px;
+    cursor: w-resize;
+}*/
+
+.avatar {
+    width: 240px;
+    height: 340px;
+    display: block;
+    margin-top: 10px;
+    background-size: 100% auto !important;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.confirm {
+    border: 2px solid green;
+    border-radius: 10px;
+}
+
+.box {
+    width: 200px;
+    margin: 0 auto;
+}
+
+.like {
+    border-radius: 5px;
+    padding: 5px 10px;
+    border: 2px solid green;
+    color: green;
+    text-transform: uppercase;
+    font-size: 15px;
+    position: absolute;
+    top: 50px;
+    right: 40px;
+    text-shadow: none;
+}
+
+.dislike {
+    border-radius: 5px;
+    padding: 5px 10px;
+    border: 2px solid red;
+    color: red;
+    text-transform: uppercase;
+    font-size: 15px;
+    position: absolute;
+    top: 50px;
+    left: 40px;
+    text-shadow: none;
+}
+/* Tech Ninja CSS Edits */
+
+#body-view {
+    overflow: hidden;
+    height: 100%;
+    position: relative;
+    background: #121113;
+}
+
+.col-sm-3 {
+    display: inline-block;
+    position: relative;
+    width: 24.5%;
+    height: 100%;
+    text-align: center;
+    bottom: 0;
+    left: 0;
+}
+
+.col-sm-4 {
+    display: inline-block;
+    position: relative;
+    width: 32.5%;
+    height: 100%;
+    text-align: center;
+    bottom: 0;
+    left: 0;
+}
+
+.col-sm-6 {
+    display: inline-block;
+    position: relative;
+    width: 48.5%;
+    height: 100%;
+    text-align: center;
+    bottom: 0;
+    left: 0;
+}
+
+div[class*="col-sm"] > a,
+div[class*="col-sm"] > .menu-title {
+    text-decoration: none!important;
+}
+
+div[class*="-menu"] .active {
+    background-color: #463E50;
+}
+
+div[class*="col-sm-4"]:nth-child(2) {
+    border-right: 1px solid rgba(100, 100, 100, 0.2);
+    border-left: 1px solid rgba(100, 100, 100, 0.2);
+}
+
+img[class*="-icon"] {
+    margin-top: 10px;
+}
+
+.menu-title {
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+.games-icon {
+    display: inline-block;
+    max-width: 25px;
+    max-height: 25px;
+}
+
+.dashboard-icon {
+    display: inline-block;
+    max-width: 25px;
+    max-height: 25px;
+}
+
+.settings-icon {
+    display: inline-block;
+    max-width: 25px;
+    max-height: 25px;
+}
+
+.primary-button {
+    width: 75%;
+    background-color: #463E50;
+    color: white;
+    text-align: center;
+    font-size: 1em;
+    padding: 10px;
+    border: 1px solid #333;
+    margin: 20px auto;
+    text-transform: uppercase;
+    max-width: 200px;
+    border-radius:5px;
+}
+
+.primary-button-wide {
+    width: 75%;
+    background-color: #463E50;
+    color: white;
+    text-align: center;
+    font-size: 1em;
+    padding: 10px;
+    border: 1px solid #333;
+    margin: 20px auto;
+    text-transform: uppercase;
+    max-width: 300px;
+}
+
+.primary-button-small {
+    width: 100%;
+    background-color: #463E50;
+    color: white;
+    text-align: center;
+    font-size: 9px;
+    padding: 5px 10px;
+    border: 1px solid #333;
+    text-transform: uppercase;
+    max-width: 75px;
+}
+/* Home View */
+
+.home-page {
+    margin-top: none;
+    height: 100%;
+}
+
+#title {
+    font-size: 44px;
+    margin-top: 5%;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 1em;
+    margin: 50px 0;
+    color: #fff;
+    text-shadow: 2px 2px 2px #000;
+}
+
+.input-item input {
+    color: #999;
+    width: 96%;
+    height: 40px;
+    margin-bottom: 15px;
+    background-color: #222;
+    border-radius: 5px;
+    padding-left: 10px;
+    font-size: 1.2em;
+    border: 1px solid #555;
+}
+
+.login-button button {
+    width: 100%;
+    background-color: #463E50;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 1em;
+    padding: 10px;
+}
+
+#links {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    color: #c5c5c5;
+    margin-top: 10px;
+}
+
+#links a,
+#links a:focus {
+    color: #463E50;
+}
+
+a#create-account {
+    color: #999;
+    text-shadow: 1px 1px 1px #000;
+}
+
+a#support-link {
+    color: #999;
+    font-size: 12px;
+}
+
+.submit-button {
+    text-align: center;
+}
+/* Dashboard View */
+
+#profile {
+    display: inline-block;
+    width: 100%;
+}
+
+.profile-halo {
+    position: relative;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+    background-color: #ebebeb;
+    border-radius: 50px;
+    display: inline-block;
+    margin-left: 15px;
+    margin: 0 0 0 20px;
+}
+
+.profile-halo-md {
+    position: relative;
+    overflow: hidden;
+    width: 70px;
+    height: 70px;
+    background-color: #ebebeb;
+    border-radius: 50px;
+    display: inline-block;
+}
+
+.profile-halo-sm {
+    position: relative;
+    overflow: hidden;
+    min-width: 50px;
+    min-height: 50px;
+    background-color: #ebebeb;
+    border-radius: 50px;
+    display: inline-block;
+}
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+}
+
+.profile-info {
+    display: inline-block;
+    min-height: 0;
+    margin-left: 20px;
+    left: 0;
+    color: #fff;
+    position: relative;
+    top: -20px;
+    margin-top: 20px;
+}
+
+div#username {
+    font-size: 12px;
+}
+
+div#gameId {
+    font-size: 12px;
+}
+
+div#firstname {
+    font-size: 26px;
+}
+
+div#lastname {
+    font-size: 26px;
+    margin-top: -10px;
+}
+/* Bottom Naviation Dashboard View */
+
+.bottom-menu {
+    position: absolute;
+    width: 100%;
+    height: 10%;
+    bottom: 0;
+    left: 0;
+    background-color: #020202;
+    color: white;
+    border-top: 2px solid #333;
+}
+
+.bottom-menu h3 {
+    margin: 0 auto;
+    padding: 0;
+}
+/* Game View */
+
+#body-view.games-page {
+    height: 100%;
+    background-color: #121113;
+}
+
+ul.active-games-list {
+    padding-bottom: 80px;
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+@media(max-width:640px) {
+    ul.active-games-list {
+        max-width: 100%;
+    }
+}
+
+#active-games {
+    margin-top: 15px;
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 30px;
+}
+
+.title {
+    font-size: 1.5em;
+    font-weight: normal;
+    text-align: center;
+    color: white;
+}
+
+.title.blk {
+    color: black;
+}
+
+.title.white {
+    color: white;
+}
+
+.active-games-list {
+    text-decoration: none;
+    list-style: none;
+    padding: 0;
+}
+
+.active-game {
+    min-height: 50px;
+    color: #ececec;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.active-game > div {
+    margin-left: 10px;
+}
+
+.active-game:nth-child(odd) {
+    background-color: #222;
+}
+
+.date {
+    font-size: 0.5em;
+    padding-top: 9px;
+    color: #888;
+}
+
+.rating {
+    float: right;
+    margin-right: 10px;
+}
+
+#resumeGame {
+    margin-top: 20px;
+}
+
+.players-count {
+    float: right;
+    margin-right: 10px;
+}
+/* Lobby Page */
+
+#body-view.lobby-page {
+    background-color: #121113;
+}
+
+.lobby-page .username {
+    font-weight: lighter;
+    font-size: 9px;
+    color: white;
+}
+
+.lobby-page .profile-pic {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0
+}
+
+.lobby-page .waiting-for-players {
+    text-align: center;
+    color: white;
+    font-weight: lighter;
+    font-size: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+/* Jeff Edits */
+
+.create-account {
+    margin: 10px;
+}
+
+.game-name {
+    font-size: 16px;
+    text-shadow: 2px 2px 1px #000;
+    color: #fff;
+    font-weight: 400;
+}
+
+ul.active-games-list:before {
+    content: "Join Existing Game...";
+    margin-left: 5px;
+    color: #666;
+    position: relative;
+    top: -5px;
+    font-size: 13px;
+}
+
+div#login {
+    margin: 0 auto;
+    width: 75%;
+}
+
+.largeTitle {
+    font-size: 44px;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 1em;
+    margin: 50px auto;
+    max-width: 85%;
+    color: #fff;
+    text-shadow: 2px 2px 2px #000;
+    width: 420px;
+}
+
+.styled-select select {
+    background: #222 url("http://cdn.bavotasan.com/wp-content/uploads/2011/05/down_arrow_select.jpg");
+    width: 99%;
+    padding: 5px;
+    font-size: 16px;
+    line-height: 1;
+    /*border: 0;*/
+    border: 1px solid #555;
+    border-radius: 5px;
+    height: 40px;
+    -webkit-appearance: none;
+    margin-bottom: 15px;
+    background-repeat: no-repeat;
+    position: relative;
+    background-position: 100%;
+    background-size: contain;
+}
+
+input#numberOfPlayers {
+    max-width: 115px;
+}
+
+.countButton {
+    display: inline-block;
+    max-width: 25px;
+    max-height: 25px;
+    background: #fff;
+}
+
+.lobby-page .waiting-for-players {
+    margin: 10px;
+    color: #fff;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 16px;
+}
+
+.playerCount {
+    color: #fff;
+}
+
+select#deckSelection {
+    margin-bottom: 0px;
+}
+
+.ready-list li .profile-halo-md {
+    border: 1px solid green;
+}
+
+.ready-list li .profile-halo-md.active {
+    border: 4px solid green;
+}
+
+.ready-list li .profile-halo-md.inactive {
+    border: 2px solid red;
+    opacity: 0.35
+}
+
+.disclaimer {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #555;
+    padding: 20px 20px 20px 20px;
+    text-align: center
+}
+
+.disclaimer a {
+    color: #777;
+}
+
+.input-item {
+    padding: 0px 20px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.support-link {
+    margin-top: 30px;
+}
+
+/*     DASHBOARD SPECIFIC     */
+
+#friendList {
+  min-height: 100px;
+  width: 90%;
+  background: #333;
+  margin: 30px auto;
+  border-top-right-radius: 10px;
+/*  border-bottom-right-radius: 10px;
+*/  border-bottom-left-radius: 10px;
+}
+#gameList {
+  min-height: 100px;
+  width: 90%;
+  background: #333;
+  margin: 20px auto;
+  border-top-right-radius: 10px;
+/*  border-bottom-right-radius: 10px;
+*/  border-bottom-left-radius: 10px;
+}
+.list-header {
+  font-size: 12px;
+  position: relative;
+  top: -15px;
+  color: #888;
+  left: -5px;
+}
+
+#editProfileBttn {
+  position: absolute;
+  /* float: right; */
+  right: 15px;
+  top: 100px;
+}

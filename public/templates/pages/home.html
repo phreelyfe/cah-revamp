@@ -1,0 +1,20 @@
+<!-- <button class="create-a-game" data-ng-click="navigateTo('home.create');">Create A Game</button>
+<button class="find-a-game" data-ng-click="navigateTo('home.join');">Find A Game</button> -->
+<div class="container">
+    <h1 id="title">The Bigger <br> Blacker <br> App</h1>
+    <div id="login">
+        <div class="input-item">
+            <input type="text" id="username" name="username" placeholder="Username" data-ng-model="username" />
+        </div>
+        <div class="input-item">
+            <input type="password" id="password" name="password" placeholder="Password" data-ng-model="password" />
+        </div>
+    </div>
+    <div class="login-button">
+        <div class="primary-button" id="loginBtn" data-ng-click="login( username, password )">Login</div>
+    </div>
+    <div id="links">
+        <div data-ng-disabled="true" class="create-account"><a id="create-account" data-ng-click="navigateTo('home.createAccount')">Create Account</a></div>
+        <div class="support-link"><a id="support-link">Support</a></div>
+    </div>
+</div>

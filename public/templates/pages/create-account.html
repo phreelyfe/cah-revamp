@@ -1,0 +1,17 @@
+<div class="container">
+    <h1 id="title">Create An <br>Account</h1>
+    <div id="form">
+        <div class="input-item">
+            <input type="text" id="username" name="username" placeholder="Username" data-ng-model="user.username" />
+        </div>
+        <div class="input-item">
+            <input type="password" id="password" name="password" placeholder="Password" data-ng-model="user.password" />
+        </div>
+        <div class="input-item">
+            <input type="email" id="email" name="email" placeholder="Email" data-ng-model="user.email" />
+        </div>
+        <br>
+        <div class="submit-button"><div id="submit" class="primary-button" data-ng-click="createUser( user );">Make It Happen!</div></div>
+        <div class="cancel-button primary-button" data-ng-click="goBack();">Cancel</div>
+    </div>    
+</div>

@@ -1,0 +1,20 @@
+<div data-ng-hide="isCzar()" class="bottom-menu">
+    <a id="card-view" data-ui-sref-active="active" data-ui-sref="home.listView" class="col-sm-6">
+        <img class="games-icon" src="assets/icons/games.png" alt="games view icon" />
+        <div class="menu-title">View List</div>
+    </a>
+    <a id="list-view" data-ui-sref-active="active" data-ui-sref="home.cardView" class="col-sm-6 active">
+        <img class="dashboard-icon" src="assets/icons/dashboard.png" alt="dashboard view icon" />
+        <div class="menu-title">View Cards</div>
+    </a>
+</div>
+<div data-ng-hide="!isCzar()" class="bottom-menu">
+    <a id="card-view" data-ui-sref-active="active" data-ui-sref="home.listView" class="col-sm-6">
+        <img class="games-icon" src="assets/icons/games.png" alt="games view icon" />
+        <div class="menu-title">You Are The Czar</div>
+    </a>
+    <a id="list-view" data-ui-sref-active="active" data-ui-sref="home.cardView" class="col-sm-6 active">
+        <img class="dashboard-icon" src="assets/icons/dashboard.png" alt="dashboard view icon" />
+        <div class="menu-title">View Submissions</div>
+    </a>
+</div>

@@ -1,0 +1,23 @@
+<div class="container">
+	<h3 class="title">The Bigger <br>Blacker<br>App</h3>
+    <div class="edit-personal-info">
+    	 <div class="input-item">
+            <input type="text" id="username" name="username" placeholder="Username" data-ng-model="user.data.username" />
+        </div>
+        <div class="input-item">
+            <input type="password" id="password" name="password" placeholder="••••••••" />
+        </div>
+        <div class="input-item">
+            <input type="email" id="email" name="email" placeholder="email@host.com" data-ng-model="user.data.email" />
+        </div>
+        <div class="input-item">
+            <input type="text" id="firstname" name="firstname" placeholder="First Name" data-ng-model="user.data.firstname" />
+        </div>
+        <div class="input-item">
+            <input type="text" id="lastname" name="lastname" placeholder="Last Name" data-ng-model="user.data.lastname" />
+        </div>
+    </div>
+    
+    <div id="saveProfile" class="primary-button" data-ng-controller="LoginController" data-ng-click="saveProfile(user.data.firstname,user.data.lastname, user.data.password, user.data.email)" data-ui-sref="home.dashboard">Save</div>
+    <div class="cancel-button primary-button" data-ng-click="goBack();">Cancel</div>
+</div>

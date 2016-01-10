@@ -1,0 +1,13 @@
+<div class="container">
+    <h3 class="title">The Bigger <br>Blacker<br>App</h3>
+    <div data-ng-click="navigateTo('home.create')" class="create-game primary-button">Create Game</div>
+    <ul class="active-games-list">
+        <li data-ng-repeat="game in games" class="active-game" data-ng-click="joinGame(game, $index)">
+            <div class="rating">Rated: {{ game.rating }}</div>
+            <div class="game-name">
+                {{ game.name }}
+                <span class="players-count">{{ game.players.length | playerMarkers }}</span>
+            </div>
+        </li>
+    </ul>
+</div>

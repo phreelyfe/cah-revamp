@@ -1,0 +1,62 @@
+<h2 data-ng-show="isCzar()">{{ user.id.username }} Is The Czar</h2>
+<h2 data-ng-show="!isCzar()">{{ user.id.username }} Is A Player</h2>
+<br>
+<h2 class="title">Cards</h2>
+<table class="czar-card">
+    <thead>
+        <tr>	
+            <td>Card ID</td>
+            <td>No. Of Answers</td>
+            <td>Text</td>
+            <td>Expansion</td>
+            <td>Submission</td>
+        </tr>
+    </tgead>
+    <tbody>
+        <tr class="card">
+        	<!-- Test isCzar {{ cardList }} -->
+            <td class="card-id">{{ czarCard.id }}</td>
+            <td class="card-numAnswers">{{ czarCard.numAnswers }}</td>
+            <td class="card-text">{{ czarCard.text }}</td>
+            <td class="card-expansion">{{ czarCard.expansion }}</td>
+        </tr>
+    </tbody>
+</table>
+<table class="Submissions">
+    <thead>
+        <tr>	
+            <td>Card</td>
+        </tr>
+    </tgead>
+    <tbody>
+        <tr class="submission col-sm-{{ cols() }}" data-ng-repeat="name in submissions">
+            <td class="submission col-sm-{{ colBlock() }}" data-ng-repeat="submission in name" data-ng-click="chooseWinner( submission )">
+                <div style="display:none; visibility:hidden;" class="name-username">{{ submission.username }}</div>
+                <div class="name-card" data-ng-class="">{{ submission.card.text }}</div>
+            </td>
+            <!-- <td class="submission-user">{{ submission.username }}</td> -->
+            <!-- <td class="submission-card">{{ submission.card.text }}</td> -->
+        </tr>
+    </tbody>
+</table>
+<table data-ng-show="!isCzar()" class="game-list">
+    <thead>
+        <tr>
+            <td>Card ID</td>
+            <td>No. Of Answers</td>
+            <td>Text</td>
+            <td>Expansion</td>
+            <td>Submission</td>
+        </tr>
+    </tgead>
+    <tbody>
+        <tr class="card" data-ng-click="" data-ng-repeat="card in player.cards">
+        	<!-- Test !isCzar {{ cardList }} -->
+            <td class="card-id">{{ card.id }}</td>
+            <td class="card-numAnswers">{{ card.numAnswers }}</td>
+            <td class="card-text">{{ card.text }}</td>
+            <td class="card-expansion">{{ card.expansion }}</td>
+            <td class="submit-button"><button data-ng-click="submit( $index )" data-ng-disabled="totalSubmissions >= numOfAnswers" class="submit">Submit</button></td>
+        </tr>
+    </tbody>
+</table>
