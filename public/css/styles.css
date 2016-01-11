@@ -64,8 +64,9 @@ ul {
     text-align: center;
     text-shadow: none;
 }
-/*
+
 #player {
+    border: 2px solid white;
     width: 280px;
     margin: auto !important;
     display: block;
@@ -160,7 +161,7 @@ ul {
     opacity: 0;
     margin-top: -800px;
     cursor: w-resize;
-}*/
+}
 
 .avatar {
     width: 240px;

@@ -1,4 +1,4 @@
-app.service('Socket', function(socketFactory, $rootScope, ParseDB, DB) {
+app.service('Socket', function(socketFactory, $rootScope, ParseDB, DB, Cards) {
 
     // Define Socket
     // var socket = $rootScope.authenticated ? socketFactory() : { on: function(){}, emit: function(){} };
@@ -18,7 +18,12 @@ app.service('Socket', function(socketFactory, $rootScope, ParseDB, DB) {
     socket.on('message', function(message) {
         console.info(["Got Message From " + message.from, message.data]);
     });
-    
+
+    // Extend RootScope Broadcasting to Socket
+    $rootScope.$on('emit', function(event, emitter) {
+      console.warn("Emitting Event: " + emitter.emit, [emitter.data]);
+      socket.emit( emitter.emit, emitter.data );
+    })
     // Server Sent User Data
     socket.on('user', function(user){
        // console.log("Broadcasting Game Data Update", game);
@@ -45,7 +50,23 @@ app.service('Socket', function(socketFactory, $rootScope, ParseDB, DB) {
        // Save To Cache
        DB.saveToStorage('game', game);
     });
+    // Responsd To State Change Events
+    socket.on('state', function( state ) {
+      $rootScope.navigateTo( state );
+    });
 
+
+    //////////////////////////////////
+    //////////////////////////////////
+    //////// GAME FUNCTIONS //////////
+    //////////////////////////////////
+    //////////////////////////////////
+
+    socket.on('getCards', function( settings ){
+      console.log("Getting Cards", settings)
+      // Get Cards From Card Service
+      $rootScope.$broadcast('getCards', settings);
+    });
 /*
     Window Factory Functions
 */

@@ -1,6 +1,6 @@
 Parse.initialize("crvtKIS2lxtvpwrSxRGGLeiVEL8rxth2AeuLRkET", "g7jneHdlu6WbQo6NZeuvs8pA139qYKjp0SPsloPn");
 
-var app = angular.module('cah', ['ui.router', 'btford.socket-io']);
+var app = angular.module('cah', ['ui.router', 'btford.socket-io', 'ngTouch']);
 
 app.directive('isReady', [function () {
     return {
@@ -29,10 +29,6 @@ app.run(function($rootScope, $timeout,
 */
     $rootScope.user = User.get() || {};
     // Handle Page Reload
-    $rootScope.$on('pageReload', function( data ){
-        console.log("Got Reloaded Data", data);
-        $rootScope.user = data.user;
-    });
     // Send Navigator To State
     $rootScope.$on('navigateTo', function( state ){
         if (!state) return console.log("No State Present: Check Server", state);
@@ -90,3 +86,61 @@ app.run(function($rootScope, $timeout,
 
 
 });
+
+// PLAYER DIRECTIVE
+// THIS WILL BE COMBINED WITH
+// THE CZAR DIRECTIVE
+app.directive('player', ['Socket', function(socket ){
+    
+    // Angular Stuff
+    console.log("From card swipe directive");
+    return {
+        restrict: 'EA',
+        controller: '',
+        templateUrl: './templates/pages/game.html',
+        transclude: true,
+        link: function(scope, elem, attrs) {
+            // console.log("PLAYER CONTROLLER VARS ", scope);
+            // console.log("Socket ", socket);
+            
+            // var cards = scope.cards;
+            // // console.log(["Card Array", scope.cards], ['is Array', Array.isArray(scope.cards), scope.cards.length]);
+
+            // scope.prev = function(idx) {
+            //     // console.log('Showing Prev Card', ['Card #' + idx], 'CARD NODE', scope.cards);
+            //     // console.log('PREV/THIS CARD', [scope.cards[idx]]);
+            //     // console.log('NEXT CARD', [scope.cards[idx - 1]]);
+
+            //     // console.log(["Scope.Cards.length", scope.cards.whiteCards.length], ["obj", scope.cards.whiteCards])
+            //     // Transition Card From Current To Next
+            //     transitionCards( scope.cards[idx], scope.cards[idx -1], {direction: 'rotate-left', delay: 400}, scope.cards[scope.cards.whiteCards.length -1]);
+
+            // };
+
+            // scope.next = function(idx) {
+            //     // console.log('Showing Next Card', ['Card #' + idx], 'CARD NODE', scope.cards);
+            //     // console.log('PREV/THIS CARD', [scope.cards[idx]]);
+            //     // console.log('NEXT CARD', [scope.cards[idx + 1]]);
+                
+            //     transitionCards( scope.cards[idx], scope.cards[idx +1], {direction: 'rotate-right', delay: 400}, scope.cards[0] );
+            // };
+
+            // function transitionCards(prev, next, rotation, loopStart) {
+            //     // console.log(["Previous Card", prev], ["Next Card", next], ["Loop Start", loopStart]);
+
+            //     if (!next) var next = loopStart;
+            //     if (!prev) var next = loopStart;
+                
+            //     $(prev).addClass(rotation.direction).delay(rotation.delay).fadeOut(1, function(){
+            //         $(prev).css("display", "none");
+            //     });
+
+            //     $(next).removeClass('rotate-left rotate-right').fadeIn(400, function(){
+            //         $(next).css("display", "block");
+            //     });
+
+            // }
+        }
+    }
+
+}]);

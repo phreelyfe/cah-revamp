@@ -1,5 +1,5 @@
-<h2 data-ng-show="isCzar()">{{ user.id.username }} Is The Czar</h2>
-<h2 data-ng-show="!isCzar()">{{ user.id.username }} Is A Player</h2>
+<h2 data-ng-show="isCzar()">{{ user.username }} Is The Czar</h2>
+<h2 data-ng-show="!isCzar()">{{ user.username }} Is A Player</h2>
 <br>
 <h2 class="title">Cards</h2>
 <table class="czar-card">
@@ -13,7 +13,7 @@
         </tr>
     </tgead>
     <tbody>
-        <tr class="card">
+        <tr class="czar-card">
         	<!-- Test isCzar {{ cardList }} -->
             <td class="card-id">{{ czarCard.id }}</td>
             <td class="card-numAnswers">{{ czarCard.numAnswers }}</td>
@@ -29,8 +29,8 @@
         </tr>
     </tgead>
     <tbody>
-        <tr class="submission col-sm-{{ cols() }}" data-ng-repeat="name in submissions">
-            <td class="submission col-sm-{{ colBlock() }}" data-ng-repeat="submission in name" data-ng-click="chooseWinner( submission )">
+        <tr class="submission" data-ng-repeat="name in submissions">
+            <td class="submission" data-ng-repeat="submission in name" data-ng-click="chooseWinner( submission )">
                 <div style="display:none; visibility:hidden;" class="name-username">{{ submission.username }}</div>
                 <div class="name-card" data-ng-class="">{{ submission.card.text }}</div>
             </td>
@@ -50,7 +50,7 @@
         </tr>
     </tgead>
     <tbody>
-        <tr class="card" data-ng-click="" data-ng-repeat="card in player.cards">
+        <tr class="player-card" data-ng-click="" data-ng-repeat="card in player.cards">
         	<!-- Test !isCzar {{ cardList }} -->
             <td class="card-id">{{ card.id }}</td>
             <td class="card-numAnswers">{{ card.numAnswers }}</td>
@@ -60,3 +60,40 @@
         </tr>
     </tbody>
 </table>
+
+
+<!--
+    CZAR SCREEN TEMPLATE
+-->
+
+
+<div data-ng-show="!isCzar()" id="player">
+    <ul class="white-cards">
+        <li class="card" data-ng-click="" data-ng-repeat="card in player.cards">
+            <!-- Test !isCzar {{ cardList }} -->
+            <div class="card-id">{{ card.id }}</div>
+            <div class="card-numAnswers">{{ card.numAnswers }}</div>
+            <div class="card-text">{{ card.text }}</div>
+            <div class="card-expansion">{{ card.expansion }}</div>
+            <div class="submit-button"><button data-ng-click="" data-ng-disabled="totalSubmissions >= numOfAnswers" class="submit">Submit</button></div>
+        </li>
+    </ul>
+</div>
+<div class="primary-button" data-ng-click="leaveGame( game )">Leave Game</div>
+<div id="status-message"></div>
+
+
+
+
+<!--
+    PLAYER SCREEN TEMPLATE
+-->
+
+
+<!-- <div id="player">
+    <ul player class="white-cards">
+    </ul>
+</div>
+<div class="primary-button">Leave Game</div>
+<div id="status-message"></div>
+ -->

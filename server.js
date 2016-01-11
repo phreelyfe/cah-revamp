@@ -72,6 +72,22 @@ var CACHE = {
         CACHE.gameRooms[ game.name ] = game.name;
         return CACHE.games[ game.name ] = game;
     };
+    CACHE.updateGame = function( name, data ) {
+        if (!name) return logger.error('Did not provide a name');
+        var g = CACHE.games[ name ],
+            settings = { active: true, status: "Got Start From " + data.creator, submissions: [] }
+        for (var prop in g) {
+            g[ prop ] = g[ prop ];
+        }
+        return CACHE.games[ name ];
+    };
+    CACHE.updatePlayer = function( Game, index, value ) {
+        CACHE.games[ Game.name ].players[ index ] = value;
+        return CACHE.games[ Game.name ];
+    };
+    CACHE.updateUser = function( User ) {
+        return CACHE.Users[ User.username ] = User;
+    }
 // Get All Games From Parse
 Parse.find('Games', "", function(err, Games){
   // If Error Set Games to Empty Object
@@ -160,6 +176,10 @@ io.on('connection', function(socket) {
         game.creator = user.username;
         // Add Players node
         game.players = [];
+        // Czar Name
+        game.czar = "";
+        // Set Czar Card
+        game.czarCard = {};
         // Save Data
         Parse.insert('Games', game , function (err, response) {
             // Bind Object ID to Game
@@ -205,7 +225,6 @@ io.on('connection', function(socket) {
             cards: [],
             score: 0,
             czarCard: {},
-            isPlayer: true,
             isCzar: false
         });
         // Push User Data into Players Node
@@ -252,7 +271,7 @@ io.on('connection', function(socket) {
         // Ref to Cache
         var cached = CACHE.games[ Game.name ] || {};
         // Remove Player Node
-        var playerIsSet = cached.players.some(function(player){ return player.username === user.username; });
+        var playerIsSet = cached.hasOwnProperty('players') ? cached.players.some(function(player){ return player.username === user.username; }) : false;
         if (playerIsSet)
             // Remove Player
             cached.players.forEach(function(player, i, a){ if ( player.username === user.get().username ) a.splice(i, 1); }),
@@ -275,6 +294,131 @@ io.on('connection', function(socket) {
         socket.emit('server', { message: "Removed You From Game " + cached.name, data: game.get() });
     });
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ///////////////////
+    /// Start Game ///
+    /////////////////
+    socket.on('startGame', function( name ) {
+        if ( !CACHE.games[ name ]) return socket.emit("server", { message: "No Game Present In Server", data: CACHE.games[ name ] }), logger.log("Starting Game ID: " + name);
+        // Start Game
+        var Game = CACHE.games[ name ];
+        // logger.debug( "GAME UPDATE FUNCTION",  CACHE.updateGame);
+        Game.players.map(function(player) {
+            // Only This User Condition
+            if (player.cards.length <= 0 && player.username === user.get().username) {
+                // Get Player Cards
+                io.in( name ).emit( 'getCards', { 
+                    type: 'both', 
+                    amt: 10, 
+                    decks: []
+                } );
+            }
+        });
+        // Emit Server Response
+        socket.emit('server', { message: "Waiting For Cards From " + user.username, data: user });
+        
+
+
+
+        // Choose Random Czar
+        var randomIdx = (function(g) { return Math.floor(Math.random() * g.players.length) }( Game ));
+        // Is there already a Czar?
+        var czarIsSet = Game.players.some(function(player){ return player.isCzar; });
+        // If User Index != to randomIdx
+        Game.players.forEach(function(player, i){
+            // If This Player Is Same As Random Index
+            // And there isn't already a czar
+            if (i === randomIdx && !czarIsSet) {
+                player.isCzar = true;
+                Game.czar = player.username;
+            }
+        });
+
+        // Work on saving data through the layers
+        game.update( Game );
+        user.update( { game: Game } );
+        CACHE.updateGame ( Game.name, Game );
+        setTimeout(function(){
+            // Update Client's Game Data
+            io.in( Game.name ).emit('gameData', Game);
+            // State Change To Game
+            io.in( Game.name ).emit('state', 'game.play');
+        }, 200);
+
+
+        // Server Response
+        io.in( Game.name ).emit('server', { message: "Czar Chosen", data: "Random Index Is " + Game.players[randomIdx].username });
+
+        // Update Client With Start Message
+        socket.emit('server', { message: "Starting Game", data: {'gane.name': name, cachedData: Game, gameData: game.get() } });
+
+    });
+
+    socket.on('getCards', function( cards ){
+        console.info("Got Cards From " + user.get().username, cards );
+        // save cards to local game object
+        var Game = CACHE.games[ game.get().name ],
+            cachedIndex,
+            Player = game.get().players.filter(function(player, i) {
+                var p = player.username === user.get().username ? player : null;
+                if (p) cachedIndex = i;
+                return p;
+            })[0];
+
+        // Add Cards To Users Hand
+        cards.playerCards.forEach(function( card ) {
+            Player.cards.push( card );
+        });
+        // Update Czar Cards
+        Player.czarCard = cards.czarCard;
+
+        // Set Czar Card
+        Game.players.forEach(function(player) {
+            !!player.isCzar ? Game.czarCard = player.czarCard : null;
+        });
+
+        // Update Cache
+        var updatedGame = CACHE.updatePlayer( Game, cachedIndex, Player );
+        CACHE.updateGame( Game.name, Game );
+        game.update( CACHE.games[ Game.name ] );
+        user.update( { game: CACHE.games[ Game.name ] });
+        // Update 
+        logger.info("Updated Game", updatedGame);
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -343,8 +487,8 @@ io.on('connection', function(socket) {
         // Do Nothing To Null User
         if (USER.username === "" || USER.username.length === 0) 
             return logger.log("Null User"),
-                    // Server Response
-                    socket.emit("server", { message: "You're Anonymous", data: user.get() });
+                // Server Response
+                socket.emit("server", { message: "You're Anonymous", data: user.get() });
 
         // If User is NOT in CACHE
         if (!CACHE.Users.hasOwnProperty( USER.username )) 
@@ -365,22 +509,24 @@ io.on('connection', function(socket) {
         // When Joining Rooms
         // Server needs timeout to
         // Update Socket Data
+        socket.join( user.get().username );
         setTimeout(function(){
             // Send Client Updated User Data;
             socket.emit('user', user.get());
-            socket.emit('gameData', game.get());
+            socket.emit('gameData', CACHE.Users[ user.get().username ].game );
+            // socket.emit('gameData', game.get());
             // Server Response
             socket.emit("server", { message: "Your Datas R Belong To Us!", data: {
                 user: user.get(), 
                 game: game.get()
             } });
-        }, 10)
+        }, 10);
     });
     // Handle User Messaging Service
     socket.on('message', function( details ){
         // Send Client Active Games
         socket.emit('server', { message: "Sending Message To " + details.username, data: details.message });
-        if ( details.username !== gameRooms.default ) io.to( details.username ).emit('message', {from: user.username, data: details.message } );
+        if ( details.username !== CACHE.gameRooms.default ) io.to( details.username ).emit('message', {from: user.username, data: details.message } );
     });
     // Client Requests Game Data
     socket.on('gameData', function( ){

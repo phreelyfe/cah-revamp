@@ -1,5 +1,5 @@
 app
-  .service('Cards', function() {
+  .service('Cards', function($rootScope) {
     var CardList = window.CardList = {};
     
     CardList.ActiveCardIdx = 0;
@@ -163,6 +163,19 @@ app
     CardList.setActiveCard = setActiveCard;
 
     // CardList.getCards(CardList.answerCards, 10)
+
+    // Key $rootScope Listeners
+    $rootScope.$on('getCards', function(event, settings) {
+        // Cards To Return To Server
+        var cards = {
+            czarCard: CardList.getCards(CardList.questionCards, 1)[0],
+            playerCards: CardList.getCards(CardList.answerCards, settings.amt)
+        };
+        console.log("Got Settings To Get Cards", settings);
+        console.warn("Sending These Cards", cards);
+
+        $rootScope.$broadcast('emit', { emit: 'getCards', data: cards })
+    });
 
     return CardList;
 })
