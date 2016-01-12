@@ -22,7 +22,7 @@ var PORT = process.env.PORT || 5000,
     }),
     mongoose = require('mongoose');
     // Connect To Mongo
-    mongoose.connect('mongodb://localhost:3001/cardsAgainstHumanity');
+    // mongoose.connect('mongodb://localhost:3001/cardsAgainstHumanity');
 
 io.set('transports', ['websocket', 
     'flashsocket', 
@@ -59,7 +59,7 @@ app.use('/scripts', express.static(__dirname + '/node_modules'));
 app.use('/scripts', express.static(__dirname + '/bower_components'));
 
 // Import DB's
-var Mongo = require('./Models/model.methods');
+// var Mongo = require('./Models/model.methods');
 var Parse = require('./Models/Parse.Functions')();
 var CACHE = { 
         games: {},
