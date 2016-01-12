@@ -92,6 +92,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                             
                         });
                         $scope.$on('games', function(event, games){
+                            console.log("Got Games", games);
                             // Reset Games Array
                             $scope.games.length = 0;
                             // Update Games
@@ -121,8 +122,23 @@ app.config(function($stateProvider, $urlRouterProvider) {
             views: {
                 'body@': {
                     templateUrl: "./templates/pages/dashboard.html",
-                    controller: function($scope, $rootScope, Socket) {
+                    controller: function($scope, $rootScope, DB, Socket) {
                         // console.log("Dash Scope", [$rootScope, $scope]);
+                        $scope.users = [];
+                        if ($scope.users.length <= 0 ) Socket.emit('users');
+                        $scope.resumeGame = function() {
+                            var game = DB.getFromStorage('game') || {};
+                            if (game.hasOwnProperty('name')) $rootScope.navigateTo('game.play');
+                        }
+                        // Get Users Online
+                        $scope.$on('users', function( event, users) {
+                            if (users.length === 0) return;
+                            console.log("USERS", users);
+                            $scope.users.length = 0;
+                            for (var user in users) {
+                                $scope.users.push( users[ user ] );
+                            }
+                        })
                     }
                 },
                 'bottom-nav@': {
@@ -261,7 +277,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                         }
 
                         $scope.$on('gameData', function(event, gameData){
-                            console.log("Updated Game Data", gameData);
+                            // console.log("Updated Game Data", gameData);
                             $scope.game = gameData || Game.get();
                             $scope.czarCard = $scope.game.czarCard || {};
                         });

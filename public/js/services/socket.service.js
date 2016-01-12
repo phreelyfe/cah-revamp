@@ -29,12 +29,21 @@ app.service('Socket', function(socketFactory, $rootScope, ParseDB, DB, Cards) {
        // console.log("Broadcasting Game Data Update", game);
        $rootScope.$broadcast('user', user);
     });
+    // Server Sent User Data
+    socket.on('user', function(user){
+       // console.log("Broadcasting Game Data Update", game);
+       $rootScope.$broadcast('user', user);
+    });
     // Alert Angular Of Game List
-    socket.on('games', function(games){
+    socket.on('users', function(users){
        // console.info("Socket Got Games", games);
-       $rootScope.$broadcast('games', games);
+       $rootScope.$broadcast('users', users);
        // Save Updated Game To User
-
+    });
+    // Update Games List
+    socket.on('games', function(games){
+       // console.log("Broadcasting Game Data Update", game);
+       $rootScope.$broadcast('games', games);
     });
     // Alert Angular Of Game List
     socket.on('setActive', function(game){

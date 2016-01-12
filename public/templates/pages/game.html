@@ -50,7 +50,11 @@
         </tr>
     </tgead>
     <tbody>
-        <tr class="player-card" data-ng-click="" data-ng-repeat="card in player.cards">
+        <tr class="player-card card" player="!isCzar()"
+            data-ng-class='{active:$first}' 
+            data-ng-repeat="card in player.cards track by $index" 
+            data-ng-swipe-right="card.prev($index);" 
+            data-ng-swipe-left="card.next($index);">
         	<!-- Test !isCzar {{ cardList }} -->
             <td class="card-id">{{ card.id }}</td>
             <td class="card-numAnswers">{{ card.numAnswers }}</td>

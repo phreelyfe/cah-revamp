@@ -481,6 +481,7 @@ io.on('connection', function(socket) {
         // Store New Socket Info
         user.set('handshake', socket.id);
         user.set('rooms', socket.rooms);
+        user.set('active', true);
         
 
         // Check For Previous User Data
@@ -506,6 +507,8 @@ io.on('connection', function(socket) {
             !!user.get().game ? logger.warn("updating local game", CACHE.games[ user.get().game.name ]) : null;
             !!user.get().game ? game.update( CACHE.games[ user.get().game.name ] ) : null;
             !!user.get().game ? socket.join( user.get().game.name ) : null;
+        // Save User Data To Cache
+        CACHE.updateUser( user.get() );
         // When Joining Rooms
         // Server needs timeout to
         // Update Socket Data
@@ -514,7 +517,8 @@ io.on('connection', function(socket) {
             // Send Client Updated User Data;
             socket.emit('user', user.get());
             socket.emit('gameData', CACHE.Users[ user.get().username ].game );
-            // socket.emit('gameData', game.get());
+            // Emit Users
+            socket.emit('users', CACHE.Users);
             // Server Response
             socket.emit("server", { message: "Your Datas R Belong To Us!", data: {
                 user: user.get(), 
@@ -535,10 +539,17 @@ io.on('connection', function(socket) {
         socket.emit('server', { message: "Updated Game Data", data: game.get() });
         
     });
-
+    // Send All Users
+    socket.on('users', function(){
+        socket.emit('users', CACHE.Users);
+        // Server Response
+        socket.emit('server', { message: "Sent All Users", data: CACHE.Users });
+    });
     // On Client Disconnect
     socket.on('disconnect', function(error) {
         logger.warn("User Left", error);
+        user.set('active', false);
+        CACHE.updateUser( user.get() );
     });
 });
 // Listen To Traffic

@@ -5,8 +5,8 @@
         <div class="profile-halo"><img class="profile-pic" src="http://pickaface.net/includes/themes/clean/img/slide2.png" alt=""></div>
         <div class="profile-info">
             <!-- <div id="firstname">{{ firstname }} {{ lastname }}</div> -->
-            <div id="username">Username: {{ username }}</div>
-            <div id="gameId">Current Game: {{activeGame}}</div>
+            <div id="username">Username: {{ user.username }}</div>
+            <div id="gameId">Current Game: {{ user.data.activeGame }}</div>
         </div>
         <div id="editProfileBttn" class="primary-button-small" data-ui-sref="home.dashboard.edit">Edit Profile</div>
     </div>
@@ -15,10 +15,10 @@
             <ul id="onlinePlayers">
 <!-- RAY: This is wehere we need data of current online players. No idea what the variables are to put in {{ }} -->
                 <div class="list-header">Current Online Players</div>
-                <li class="list-online-players" data-ng-repeat="player in players">{{player.username}}, {{player.active}}</li>
+                <li class="list-online-players" data-ng-repeat="user in users" data-ng-show="user.active">{{user.username}}</li>
             </ul>
         </div>
     </div>
-    <div id="resumeGame" class="primary-button" data-ui-sref="home.player">Resume Game</button>
+    <div id="resumeGame" class="primary-button" data-ng-click="resumeGame()">Resume Game</button>
     <div data-ui-view="bottom-nav"></div>
 </div>
