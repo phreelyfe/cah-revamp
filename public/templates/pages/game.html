@@ -1,27 +1,12 @@
-<h2 data-ng-show="isCzar()">{{ user.username }} Is The Czar</h2>
-<h2 data-ng-show="!isCzar()">{{ user.username }} Is A Player</h2>
-<br>
-<h2 class="title">Cards</h2>
-<table class="czar-card">
-    <thead>
-        <tr>	
-            <td>Card ID</td>
-            <td>No. Of Answers</td>
-            <td>Text</td>
-            <td>Expansion</td>
-            <td>Submission</td>
-        </tr>
-    </tgead>
-    <tbody>
-        <tr class="czar-card">
-        	<!-- Test isCzar {{ cardList }} -->
-            <td class="card-id">{{ czarCard.id }}</td>
-            <td class="card-numAnswers">{{ czarCard.numAnswers }}</td>
-            <td class="card-text">{{ czarCard.text }}</td>
-            <td class="card-expansion">{{ czarCard.expansion }}</td>
-        </tr>
-    </tbody>
-</table>
+<h2 class="user-game-state" data-ng-show="isCzar()"><span class="username">{{ user.username }}</span> you are the czar</h2>
+<h2 class="user-game-state" data-ng-show="!isCzar()"><span class="username">{{ user.username }}</span> you are a player</h2>
+<ul class="czar-card">
+	<!-- Test isCzar {{ cardList }} -->
+    <li class="card-id">{{ czarCard.id }}</li>
+    <li class="card-numAnswers">{{ czarCard.numAnswers }}</li>
+    <li class="card-text">{{ czarCard.text }}</li>
+    <li class="card-expansion">{{ czarCard.expansion }}</li>
+</ul>
 <table class="Submissions">
     <thead>
         <tr>	
@@ -55,16 +40,6 @@
             data-ng-repeat="card in player.cards track by $index" 
             data-ng-swipe-right="card.prev($index);" 
             data-ng-swipe-left="card.next($index);">
-        	<!-- Test !isCzar {{ cardList }} -->
-            <td class="card-id">{{ card.id }}</td>
-            <td class="card-numAnswers">{{ card.numAnswers }}</td>
-            <td class="card-text">{{ card.text }}</td>
-            <td class="card-expansion">{{ card.expansion }}</td>
-            <td class="submit-button"><button data-ng-click="submit( $index )" data-ng-disabled="totalSubmissions >= numOfAnswers" class="submit">Submit</button></td>
-        </tr>
-    </tbody>
-</table>
-
 
 <!--
     CZAR SCREEN TEMPLATE
@@ -73,12 +48,11 @@
 
 <div data-ng-show="!isCzar()" id="player">
     <ul class="white-cards">
-        <li class="card" data-ng-click="" data-ng-repeat="card in player.cards">
+        <li class="card white" data-ng-class='{active:$first}'  data-ng-repeat="card in player.cards">
             <!-- Test !isCzar {{ cardList }} -->
-            <div class="card-id">{{ card.id }}</div>
-            <div class="card-numAnswers">{{ card.numAnswers }}</div>
-            <div class="card-text">{{ card.text }}</div>
-            <div class="card-expansion">{{ card.expansion }}</div>
+            <div class="card-id card-num">{{ card.id }}</div>
+            <div class="card-text value">{{ card.text }}</div>
+            <div class="card-expansion expansion">{{ card.expansion }}</div>
             <div class="submit-button"><button data-ng-click="" data-ng-disabled="totalSubmissions >= numOfAnswers" class="submit">Submit</button></div>
         </li>
     </ul>
