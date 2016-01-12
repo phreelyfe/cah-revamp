@@ -73,6 +73,7 @@ var CACHE = {
         return CACHE.games[ game.name ] = game;
     };
     CACHE.updateGame = function( name, data ) {
+        if (CACHE.games.hasOwnProperty('undefined')) delete CACHE.games[ 'undefined' ];
         if (!name) return logger.error('Did not provide a name');
         var g = CACHE.games[ name ],
             settings = { active: true, status: "Got Start From " + data.creator, submissions: [] }

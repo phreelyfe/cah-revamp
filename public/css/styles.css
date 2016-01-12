@@ -66,7 +66,6 @@ ul {
 }
 
 #player {
-    border: 2px solid white;
     width: 280px;
     margin: auto !important;
     display: block;
@@ -116,6 +115,33 @@ ul {
     bottom: 10px;
     right: 10px;
     font-size: 10px;
+}
+
+.card .expansion{
+    position:absolute;
+    bottom:10px;
+    right:10px;
+    text-align:left;
+    font-size:12px;
+    color:#444;
+    text-shadow:1px 1px 1px #fff;
+}
+
+.card button[class*="submit"] {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+h2.user-game-state .username {
+    text-transform: capitalize;
+}
+
+h2.user-game-state {
+    font-size: 14px;
+    font-weight: 200;
+    text-align: right;
+    padding-right: 20px;
 }
 
 .white {
