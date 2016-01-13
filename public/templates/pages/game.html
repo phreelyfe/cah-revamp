@@ -24,22 +24,6 @@
         </tr>
     </tbody>
 </table>
-<table data-ng-show="!isCzar()" class="game-list">
-    <thead>
-        <tr>
-            <td>Card ID</td>
-            <td>No. Of Answers</td>
-            <td>Text</td>
-            <td>Expansion</td>
-            <td>Submission</td>
-        </tr>
-    </tgead>
-    <tbody>
-        <tr class="player-card card" player="!isCzar()"
-            data-ng-class='{active:$first}' 
-            data-ng-repeat="card in player.cards track by $index" 
-            data-ng-swipe-right="card.prev($index);" 
-            data-ng-swipe-left="card.next($index);">
 
 <!--
     CZAR SCREEN TEMPLATE
@@ -48,16 +32,23 @@
 
 <div data-ng-show="!isCzar()" id="player">
     <ul class="white-cards">
-        <li class="card white" data-ng-class='{active:$first}'  data-ng-repeat="card in player.cards">
+        <li isplayer="!isCzar()" class="card white" data-ng-class='{active:$first}'  
+            data-ng-repeat="card in player.cards"
+            data-ng-class='{active:$first}' 
+            data-ng-repeat="card in player.cards track by $index" 
+            data-ng-swipe-right="card.prev($index);" 
+            data-ng-swipe-left="card.next($index);">
             <!-- Test !isCzar {{ cardList }} -->
             <div class="card-id card-num">{{ card.id }}</div>
             <div class="card-text value">{{ card.text }}</div>
             <div class="card-expansion expansion">{{ card.expansion }}</div>
-            <div class="submit-button"><button data-ng-click="" data-ng-disabled="totalSubmissions >= numOfAnswers" class="submit">Submit</button></div>
+            <div class="submit-button">
+                <button data-ng-click="" data-ng-disabled="totalSubmissions >= numOfAnswers" class="submit">Submit</button>
+            </div>
         </li>
     </ul>
 </div>
-<div class="primary-button" data-ng-click="leaveGame( game )">Leave Game</div>
+<div class="primary-button leave" data-ng-click="leaveGame( game )">Leave Game</div>
 <div id="status-message"></div>
 
 
