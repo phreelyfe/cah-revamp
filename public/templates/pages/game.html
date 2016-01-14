@@ -1,13 +1,13 @@
-<h2 class="user-game-state" data-ng-show="isCzar()"><span class="username">{{ user.username }}</span> you are the czar</h2>
-<h2 class="user-game-state" data-ng-show="!isCzar()"><span class="username">{{ user.username }}</span> you are a player</h2>
+<h2 class="user-game-state inactive" data-ng-show="isCzar()"><span class="username">{{ user.username }} </span><span class="user-state">[Czar]</span></h2>
+<h2 class="user-game-state inactive" data-ng-show="!isCzar()"><span class="username">{{ user.username }} </span><span class="user-state">[Player]</span></h2>
 <ul class="czar-card">
 	<!-- Test isCzar {{ cardList }} -->
-    <li class="card-id">{{ czarCard.id }}</li>
-    <li class="card-numAnswers">{{ czarCard.numAnswers }}</li>
+    <li class="card-id inactive">{{ czarCard.id }}</li>
+    <li class="card-numAnswers inactive">{{ czarCard.numAnswers }}</li>
     <li class="card-text">{{ czarCard.text }}</li>
-    <li class="card-expansion">{{ czarCard.expansion }}</li>
+    <li class="card-expansion inactive">{{ czarCard.expansion }}</li>
 </ul>
-<table class="Submissions">
+<table class="Submissions inactive">
     <thead>
         <tr>	
             <td>Card</td>
@@ -31,17 +31,15 @@
 
 
 <div data-ng-show="!isCzar()" id="player">
-    <ul class="white-cards">
-        <li isplayer="!isCzar()" class="card white" data-ng-class='{active:$first}'  
+    <ul is-player="{{!isCzar()}}" class="white-cards">
+        <li class="card white" data-ng-class='{active:$first}'  
             data-ng-repeat="card in player.cards"
-            data-ng-class='{active:$first}' 
             data-ng-repeat="card in player.cards track by $index" 
             data-ng-swipe-right="card.prev($index);" 
             data-ng-swipe-left="card.next($index);">
             <!-- Test !isCzar {{ cardList }} -->
-            <div class="card-id card-num">{{ card.id }}</div>
+            <div class="card-id card-num">ID: {{ card.id }}</div>
             <div class="card-text value">{{ card.text }}</div>
-            <div class="card-expansion expansion">{{ card.expansion }}</div>
             <div class="submit-button">
                 <button data-ng-click="" data-ng-disabled="totalSubmissions >= numOfAnswers" class="submit">Submit</button>
             </div>

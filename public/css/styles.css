@@ -67,7 +67,7 @@ ul {
 
 #player {
     width: 280px;
-    margin: auto !important;
+    margin: 10px auto !important;
     display: block;
     height: 400px;
     position: relative;
@@ -97,6 +97,25 @@ ul {
 }
 .inactive{
     display:none;
+}
+
+.primary-button.leave {
+    position: absolute;
+    top: -16px;
+    padding: 5px 10px;
+    width: auto;
+    left: 3px;
+    font-size: 11px;
+    border-radius: 0px;
+}
+
+ul.czar-card {
+    max-width: 280px;
+    margin: 20px auto 5px;
+    list-style: none;
+    font-size: 12px;
+    text-align: center;
+    font-weight: 200;
 }
 
 .card .value {
@@ -133,15 +152,21 @@ ul {
     left: 10px;
 }
 
+.user-game-state .user-state {
+    color: #695D77;
+    font-weight: 700;
+}
+
 h2.user-game-state .username {
     text-transform: capitalize;
+    color: #695D77;
 }
 
 h2.user-game-state {
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 200;
     text-align: right;
-    padding-right: 20px;
+    padding-right: 5px;
 }
 
 .white {
@@ -768,4 +793,48 @@ select#deckSelection {
   /* float: right; */
   right: 15px;
   top: 100px;
+}
+
+
+
+/* New Edits - Message Screen */
+.user-list .user {
+    margin: 10px 0;
+    padding: 2%;
+    background: #222;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.user-list .primary-button {
+    padding: 6px;
+    border-radius: 0px;
+    width: 25%;
+    font-size: 14px;
+    position: relative;
+    top: 0px;
+    font-weight: 200;
+    margin-left: 1%;
+}
+
+.user-list input {
+    font-size: 14px;
+    padding: 5px 2px;
+    width:77%;
+}
+
+.user-list .username {
+    font-size: 12px;
+    position: relative;
+    top: -5px;
+}
+
+ul.user-list {
+    margin: 2%;
+}
+
+.messages-title{
+        max-width: 200px;
+    margin: 10px auto;
+    text-align: center;
 }

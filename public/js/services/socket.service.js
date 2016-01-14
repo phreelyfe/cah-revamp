@@ -17,6 +17,7 @@ app.service('Socket', function(socketFactory, $rootScope, ParseDB, DB, Cards) {
     // Got Message From User
     socket.on('message', function(message) {
         console.info(["Got Message From " + message.from, message.data]);
+        window.toastr.info( message.from + ": " + message.data );
     });
 
     // Extend RootScope Broadcasting to Socket
@@ -62,6 +63,10 @@ app.service('Socket', function(socketFactory, $rootScope, ParseDB, DB, Cards) {
     // Responsd To State Change Events
     socket.on('state', function( state ) {
       $rootScope.navigateTo( state );
+    });
+    
+    socket.on('notify', function( message ) {
+    window.toastr.success( 'success' );
     });
 
 

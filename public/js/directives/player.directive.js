@@ -1,14 +1,14 @@
-app.directive('player', [function(){
+app.directive('isPlayer', [function(){
     
     return {
         restrict: 'A',
         // transclude: true,
         link: function(scope, elem, attrs) {
-            // // console.log("PLAYER CONTROLLER VARS ", scope);
+            console.log("PLAYER CONTROLLER VARS ", scope, elem, attrs);
             // // console.log("Socket ", socket);
             
-            // // var cards = new Array(attrs.$$element[0].children);
-            // // console.log(["Card Array", cards], ['is Array', Array.isArray(cards), cards.length]);
+            // var cards = new Array(attrs.$$element[0].children);
+            // console.log(["Card Array", cards], ['is Array', Array.isArray(cards), cards.length]);
             // console.log(["Scope", scope, elem, attrs])
 
             // scope.prev = function(idx) {

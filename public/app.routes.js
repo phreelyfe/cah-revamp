@@ -294,16 +294,48 @@ app.config(function($stateProvider, $urlRouterProvider) {
             }
         })
         .state('game.over', {
-                    url: '/over',
-                    parent: 'home',
-                    views: {
-                        'body@': {
-                            templateUrl: "./templates/pages/game.over.html",
-                            controller: function($scope, Socket, $rootScope) {
-                                $scope.message = "Game Over -- Would You Like to Play Again?";
-                            }
-                        }
+            url: '/over',
+            parent: 'home',
+            views: {
+                'body@': {
+                    templateUrl: "./templates/pages/game.over.html",
+                    controller: function($scope, Socket, $rootScope) {
+                        $scope.message = "Game Over -- Would You Like to Play Again?";
                     }
-                });
+                }
+            }
+        })
+        .state('home.messages', {
+            url: '/messages',
+            views: {
+                'body@': {
+                    templateUrl: "./templates/menus/messages.html",
+                    controller: function($scope, Socket, $rootScope) {
+                        $scope.users = [];
+                        
+                        if ($scope.users.length <= 0) Socket.emit('users');
+                        
+                        $scope.$on('users', function( event, users) {
+                            if (users.length === 0) return;
+                            console.log("USERS", users);
+                            $scope.users.length = 0;
+                            for (var user in users) {
+                                $scope.users.push( users[ user ] );
+                            }
+                        });
+                        
+                        $scope.send = function( user, message ) {
+                            Socket.emit('message', { username: user.username, message: message });
+                        }
+                        
+                    }
+                },
+                'bottom-nav@': {
+                    templateUrl: "./templates/menus/bottom-nav.html",
+                    controller: ""
+                    // controller: "HomeCtrl"
+                }
+            }
+        });
     $urlRouterProvider.otherwise('/');
 });
