@@ -277,8 +277,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
             views: {
                 'body@': {
                     templateUrl: "./templates/menus/messages.html",
-                    controller: function($scope, Socket, $rootScope) {
+                    controller: function($scope, Socket, $rootScope, Game) {
                         $scope.users = [];
+                        $scope.game = Game.get();
                         
                         if ($scope.users.length <= 0) Socket.emit('users');
                         
@@ -292,8 +293,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
                         });
                         
                         $scope.send = function( user, message ) {
-                            Socket.emit('message', { username: user.username, message: message });
+                            if (!!message ) return Socket.emit('message', { username: user.username, message: message });
+                            message = user;
+                            Socket.emit('message', { username: $scope.game.name, message: message });
                         }
+                        
+                        // Window Factory
+                        window.cah = window.cah || {};
+                        window.cah.scope = window.cah.scope || {};
+                        window.cah.scope.messages = $scope;
                         
                     }
                 },

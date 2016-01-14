@@ -1,6 +1,11 @@
 <div class="hamburger-menu message-service-container">
     <h2 class="messages-title">Message A User</h2>
     <ul class="user-list">
+        <li class="default-room user">
+            <div class="username">Game Room</div>
+            <span class="message-box"><input type="text" data-ng-model="messageAll" name="" placeholder="Type Your Message" /></span>
+            <span class="primary-button message" data-ng-click="send( messageAll )">Send</span>
+        </li>
         <li class="user" data-ng-repeat="user in users">
             <div class="username">{{ user.username }}</div>
             <span class="message-box"><input type="text" data-ng-model="message" name="" placeholder="Type Your Message" /></span>

@@ -84,9 +84,9 @@ ul {
     display: none;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    padding: 20px;
+    padding: 100px 20px;
     width: 85%;
-    height: 360px;
+    max-height: 360px;
     top: 0px;
     left: 0px;
     position: absolute;
@@ -111,7 +111,7 @@ ul {
 
 ul.czar-card {
     max-width: 280px;
-    margin: 20px auto 5px;
+    margin: 20px auto 5px auto;
     list-style: none;
     font-size: 12px;
     text-align: center;

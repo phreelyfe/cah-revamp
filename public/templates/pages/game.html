@@ -31,7 +31,7 @@
 
 
 <div data-ng-show="!isCzar()" id="player">
-    <ul player-node="{{!isCzar()}}" class="white-cards">
+    <ul player-node="{{!isCzar()}}" class="czar-card">
         <li class="card white" data-ng-class='{active:$first}'  
             data-ng-repeat="card in player.cards"
             data-ng-repeat="card in player.cards track by $index" 

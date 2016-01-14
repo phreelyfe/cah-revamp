@@ -31,6 +31,10 @@ app.directive('playerNode', function(){
                 $scope.game = gameData || Game.get();
                 $scope.czarCard = $scope.game.czarCard || {};
             });
+            
+            $scope.send = function() {
+                console.log("Send", arguments);
+            }
 
             // Window Factory
             window.cah = window.cah|| {};
