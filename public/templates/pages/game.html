@@ -32,12 +32,12 @@
 
 <div data-ng-show="!isCzar()" id="player">
     <ul class="white-cards">
-        <li isplayer="!isCzar()" class="card white" data-ng-class='{active:$first}'  
+        <li player-position="!isCzar()" class="card white" data-ng-class='{active:$first}'  
             data-ng-repeat="card in player.cards"
             data-ng-class='{active:$first}' 
             data-ng-repeat="card in player.cards track by $index" 
-            data-ng-swipe-right="card.prev($index);" 
-            data-ng-swipe-left="card.next($index);">
+            data-ng-swipe-right="console.log('Im swiping Right!!!!!');" 
+            data-ng-swipe-left="console.log('Im swiping Right!!!!!');">
             <!-- Test !isCzar {{ cardList }} -->
             <div class="card-id card-num">{{ card.id }}</div>
             <div class="card-text value">{{ card.text }}</div>

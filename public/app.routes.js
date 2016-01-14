@@ -251,41 +251,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/play',
             views: {
                 'body@': {
-                    templateUrl: "./templates/pages/game.html",
-                    controller: function($scope, Socket, $rootScope, Game, User) { 
-                        // Player Settings
-                        $scope.user = User.get();
-                        $scope.players = Game.get().players;
-                        $scope.player = !!Game.get().hasOwnProperty('players') ? Game.get().players.filter(function(player){
-                            return player.username === $rootScope.user.username ? player : null;
-                        })[0] : {};
-                        // Game Settings
-                        $scope.game = Game.get();
-                        $scope.czarCard = Game.get().czarCard || {};
-
-                        // User Is Czar?
-                        $scope.isCzar = function() {
-                            return $scope.game.czar === $scope.user.username ? true : false;
-                        }
-                        // Leave Game
-                        $scope.leaveGame = function( game ) {
-                            // Clear Game Data on Server
-                            Socket.emit('leaveGame', game);
-                            // console.warn("Emitting Leave Game", game)
-                            // Navigate To Join Game Screen
-                            $rootScope.navigateTo('home.join');
-                        }
-
-                        $scope.$on('gameData', function(event, gameData){
-                            // console.log("Updated Game Data", gameData);
-                            $scope.game = gameData || Game.get();
-                            $scope.czarCard = $scope.game.czarCard || {};
-                        });
-
-                        // Window Factory
-                        window.cah = window.cah|| {};
-                        window.cah.scope.game = $scope;
-                    }
+                    templateUrl: "./templates/pages/game.html"
                 },
                 'bottom-nav@': {
                     templateUrl: "./templates/menus/bottom-nav.html"
