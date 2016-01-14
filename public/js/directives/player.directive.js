@@ -1,13 +1,22 @@
+<<<<<<< HEAD
 app.directive('playerPosition', function(){
+=======
+app.directive('isPlayer', [function(){
+    
+>>>>>>> e2dd8de8931509265b328daae36d83ce81b0b7fd
     return {
         restrict: 'A',
         // transclude: true,
         link: function(scope, elem, attrs) {
+<<<<<<< HEAD
             console.log("PLAYER CONTROLLER VARS ", scope);
+=======
+            console.log("PLAYER CONTROLLER VARS ", scope, elem, attrs);
+>>>>>>> e2dd8de8931509265b328daae36d83ce81b0b7fd
             // // console.log("Socket ", socket);
             
-            // // var cards = new Array(attrs.$$element[0].children);
-            // // console.log(["Card Array", cards], ['is Array', Array.isArray(cards), cards.length]);
+            // var cards = new Array(attrs.$$element[0].children);
+            // console.log(["Card Array", cards], ['is Array', Array.isArray(cards), cards.length]);
             // console.log(["Scope", scope, elem, attrs])
 
             scope.prev = function(idx) {

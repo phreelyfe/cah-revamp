@@ -57,6 +57,7 @@ app.set('views', path.join(__dirname, '/public'));
 app.use(express.static(__dirname + '/public'));
 app.use('/scripts', express.static(__dirname + '/node_modules'));
 app.use('/scripts', express.static(__dirname + '/bower_components'));
+app.use('/css', express.static(__dirname + '/bower_components'));
 
 // Import DB's
 // var Mongo = require('./Models/model.methods');
@@ -351,6 +352,7 @@ io.on('connection', function(socket) {
         });
 
         // Work on saving data through the layers
+        Game.active = true;
         game.update( Game );
         user.update( { game: Game } );
         CACHE.updateGame ( Game.name, Game );
@@ -531,7 +533,8 @@ io.on('connection', function(socket) {
     socket.on('message', function( details ){
         // Send Client Active Games
         socket.emit('server', { message: "Sending Message To " + details.username, data: details.message });
-        if ( details.username !== CACHE.gameRooms.default ) io.to( details.username ).emit('message', {from: user.username, data: details.message } );
+        if ( details.username !== CACHE.gameRooms.default ) io.to( details.username ).emit('message', {from: user.username, data: details.message } ), socket.emit('notify', "Success");
+        
     });
     // Client Requests Game Data
     socket.on('gameData', function( ){

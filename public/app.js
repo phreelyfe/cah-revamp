@@ -74,6 +74,26 @@ app.run(function($rootScope, $timeout,
         return from.name  + angular.toJson(fromP) + " -> " + to.name + angular.toJson(toP);
     }
 
+    // Notify JS Styles
+    // $.notify.addStyle('default', {
+    //     html: "<span data-notify-text/>",
+    //     classes: {
+    //         base: {
+    //             "word-wrap": "break-word",
+    //             "line-height": "25px",
+    //             "width": "150px",
+    //             "font-weight": "bold",
+				// "padding": "8px 15px 8px 14px",
+				// "text-shadow": "0 1px 0 rgba(255, 255, 255, 0.5)",
+				// "background-color": "#fcf8e3",
+				// "border": "1px solid #fbeed5",
+				// "border-radius": "4px",
+				// "padding-left": "25px",
+				// "background-repeat": "no-repeat",
+				// "background-position": "3px 7px"
+    //         }
+    //     }
+    // });
 
     // Window Factory
     window.cah = window.cah || {};
