@@ -252,6 +252,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             views: {
                 'body@': {
                     templateUrl: "./templates/pages/game.html"
+                    
                 },
                 'bottom-nav@': {
                     templateUrl: "./templates/menus/bottom-nav.html"
