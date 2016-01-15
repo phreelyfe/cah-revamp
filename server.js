@@ -242,7 +242,7 @@ io.on('connection', function(socket) {
         // Update All Clients Of New User
         logger.warn("Updating Game in Parse", gameData);
         Parse.update( 'Games', gameData.objectId, gameData).then(function(data) {
-            // logger.info("Updated Game Successfully", data);
+            logger.info("Updated Game Successfully", data);
             io.in( CACHE.gameRooms.default ).emit( 'games', CACHE.games );
         }).catch(function(err, res){
             logger.error("Errored Out", err, res);
@@ -456,7 +456,6 @@ io.on('connection', function(socket) {
         // Delete Submissions
         Game.submissions.length = 0;
         // Set New Czar
-        var czarCard;
         Game.players.forEach(function(player, i){
             // Reset Player Position
             player.isCzar = false;
@@ -470,12 +469,8 @@ io.on('connection', function(socket) {
                 // Set Czar Card
                 Game.czarCard = player.czarCard;
             }
-        });
-        // // Set Czar Card
-        // Game.players.forEach(function(player) {
-        //     !!player.isCzar ? Game.czarCard = player.czarCard : null;
-        // });
-
+        }); 
+        // Update Cached Game
         CACHE.updateGame( Game.name, Game );
         logger.warn('Updated: ' + Game.name + ". Broadcasting this and getCard request", Game);
         var amtOfNewCards = Game.czarCard.numAnswers;

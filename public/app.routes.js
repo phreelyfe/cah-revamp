@@ -92,7 +92,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                             
                         });
                         $scope.$on('games', function(event, games){
-                            console.log("Got Games", games);
+                            // console.log("Got Games", games);
                             // Reset Games Array
                             $scope.games.length = 0;
                             // Update Games
