@@ -1,5 +1,11 @@
-<h2 class="user-game-state inactive" data-ng-show="isCzar()"><span class="username">{{ user.username }} </span><span class="user-state">[Czar]</span></h2>
-<h2 class="user-game-state inactive" data-ng-show="!isCzar()"><span class="username">{{ user.username }} </span><span class="user-state">[Player]</span></h2>
+<!--
+    PLAYER POSITION TEMPLATE
+-->
+<h2 class="user-game-state" data-ng-show="isCzar()"><span class="username">{{ user.username }} </span><span class="user-state">[Czar]</span></h2>
+<h2 class="user-game-state" data-ng-show="!isCzar()"><span class="username">{{ user.username }} </span><span class="user-state">[Player]</span></h2>
+<!--
+    CZAR CARD TEMPLATE
+-->
 <ul class="czar-card">
 	<!-- Test isCzar {{ cardList }} -->
     <li class="card-id inactive">{{ czarCard.id }}</li>
@@ -7,31 +13,14 @@
     <li class="card-text">{{ czarCard.text }}</li>
     <li class="card-expansion inactive">{{ czarCard.expansion }}</li>
 </ul>
-<table class="Submissions inactive">
-    <thead>
-        <tr>	
-            <td>Card</td>
-        </tr>
-    </tgead>
-    <tbody>
-        <tr class="submission" data-ng-repeat="name in submissions">
-            <td class="submission" data-ng-repeat="submission in name" data-ng-click="chooseWinner( submission )">
-                <div style="display:none; visibility:hidden;" class="name-username">{{ submission.username }}</div>
-                <div class="name-card" data-ng-class="">{{ submission.card.text }}</div>
-            </td>
-            <!-- <td class="submission-user">{{ submission.username }}</td> -->
-            <!-- <td class="submission-card">{{ submission.card.text }}</td> -->
-        </tr>
-    </tbody>
-</table>
 
 <!--
-    CZAR SCREEN TEMPLATE
+    PLAYER SCREEN TEMPLATE
 -->
 
 
 <div data-ng-show="!isCzar()" id="player">
-    <ul player-node="{{!isCzar()}}" class="czar-card">
+    <ul game-player="{{!isCzar()}}" class="czar-card">
         <li class="card white" data-ng-class='{active:$first}'  
             data-ng-repeat="card in player.cards"
             data-ng-repeat="card in player.cards track by $index" 
@@ -41,26 +30,10 @@
             <div class="card-id card-num">ID: {{ card.id }}</div>
             <div class="card-text value">{{ card.text }}</div>
             <div class="submit-button">
-                <button data-ng-click="" data-ng-disabled="totalSubmissions >= numOfAnswers" class="submit">Submit</button>
+                <button data-ng-click="submit( $index )" data-ng-disabled="totalSubmissions >= numOfAnswers" class="submit">Submit</button>
             </div>
         </li>
     </ul>
 </div>
 <div class="primary-button leave" data-ng-click="leaveGame( game )">Leave Game</div>
 <div id="status-message"></div>
-
-
-
-
-<!--
-    PLAYER SCREEN TEMPLATE
--->
-
-
-<!-- <div id="player">
-    <ul player class="white-cards">
-    </ul>
-</div>
-<div class="primary-button">Leave Game</div>
-<div id="status-message"></div>
- -->

@@ -218,6 +218,7 @@ io.on('connection', function(socket) {
         socket.join( Game.name );
         // Set Cached Game Ref
         var gameData = CACHE.games[ Game.name ];
+            gameData.submissions = [];
 
         // Check If Player Already In Game
         var playerIsSet = gameData.players.some(function(player){ return player.username === user.username; });
@@ -407,7 +408,89 @@ io.on('connection', function(socket) {
     });
 
 
+    // Submit Card To Czar
+    socket.on('submission', function( card, index ){
+        console.log("Got Card From "+ user.username, card );
+        CACHE.games[ game.get().name ].players.forEach(function(player){
+            var removed;
+            // Remove Card From Players Hand
+            if (player.username === user.username) removed = player.cards.splice(index, 1);
+        });
+        var submission = {username: user.username, card: card };
+        // Create Submissions Array if none Available
+        CACHE.games[ game.get().name ].submissions = CACHE.games[ game.get().name ].submissions || [];
+        // Push Users Card Into Sumbissions
+        CACHE.games[ game.get().name ].submissions.push(submission);
+        // If user is Czar
+        io.in( game.get().name ).emit('submission', submission);
+        // Emit New Game Data
+        io.in( game.get().name ).emit('gameData', CACHE.games[ game.get().name ] );
+        // Server Response
+        socket.emit('server', { message: "Got Submission", data: [card, index]});
+        
+    });
+    // Award Winner
+    socket.on('bestCard', function( User ){
+        console.log("Best Card Chosen "+ User.username, User.cards, User );
+        // Increment Winners Points
+        var Game = CACHE.games[ game.get().name ],
+            finished = false;
 
+        Game.players.forEach(function(player){ if (player.username === User.username) {
+            player.score ++;
+            // Determine if Round is complete
+            if (player.score >= Game.maxPoints) finished = true;
+        } })
+        // Emit Winner Data to All Clients
+        io.in( game.get().name ).emit('winner', { username: User.username, card: User.cards });
+        if (finished) return io.in( game.get().name ).emit('finished');
+        // Choose New Czar
+        var newCzar = Game.players.reduce(function(o, player, i, a){
+            var totalPlayers = a.length - 1;
+            // console.log(player.username + " is index " + i, "Is Czar?", player.isCzar, "Total Players Is " + totalPlayers, "Current Index Plus One", i+1);
+            if (player.isCzar && (i + 1) <= totalPlayers) o['czarIs'] = a[i + 1].username;
+            if (player.isCzar && (i + 1) > totalPlayers) o['czarIs'] = a[0].username;
+            return o
+        }, {});
+        logger.info('new czar needs to be set', newCzar);
+        // Delete Submissions
+        Game.submissions.length = 0;
+        // Set New Czar
+        var czarCard;
+        Game.players.forEach(function(player, i){
+            // Reset Player Position
+            player.isCzar = false;
+            // Set New Czar
+            console.log("Attempting To Set New Czar", newCzar);
+            if (newCzar.czarIs === player.username) {
+                console.log("New Czar Has Been Chosen", player.username);
+                // Set Player as Czar
+                player.isCzar = true;
+                Game.czar = player.username;
+                // Set Czar Card
+                Game.czarCard = player.czarCard;
+            }
+        });
+        // // Set Czar Card
+        // Game.players.forEach(function(player) {
+        //     !!player.isCzar ? Game.czarCard = player.czarCard : null;
+        // });
+
+        CACHE.updateGame( Game.name, Game );
+        logger.warn('Updated: ' + Game.name + ". Broadcasting this and getCard request", Game);
+        var amtOfNewCards = Game.czarCard.numAnswers;
+        // Start New Round
+        socket.broadcast.in( game.get().name ).emit('getCards', { 
+            type: 'both', 
+            amt: amtOfNewCards, 
+            decks: []
+        });
+
+        // Emit Game Data
+        io.in( Game.name ).emit('gameData', CACHE.games[ Game.name ]);
+        // Server Response
+        io.in( Game.name ).emit('server', { message: "Game Wrapped Up... Starting New Round", data: Game });
+    });
 
 
 

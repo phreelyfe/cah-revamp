@@ -1,0 +1,7 @@
+<ul class="submissions">
+	<li class="submission" data-ng-repeat="player in submissions" data-ng-click="chooseWinner( player )">
+		<div class="player-submissions active-game" data-ng-repeat="entry in player">
+			<div class="card-text">{{ entry.card.text }}</div>
+		</div>
+	</li>
+</ul>

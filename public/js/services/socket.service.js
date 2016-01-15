@@ -24,7 +24,21 @@ app.service('Socket', function(socketFactory, $rootScope, ParseDB, DB, Cards) {
     $rootScope.$on('emit', function(event, emitter) {
       console.warn("Emitting Event: " + emitter.emit, [emitter.data]);
       socket.emit( emitter.emit, emitter.data );
-    })
+    });
+    // Submit an Answer Card
+    $rootScope.$on('submit', function(event, submission) {
+      console.warn("Sending Submission to Socket", submission);
+      socket.emit('submission', submission.card, submission.index);
+    });
+    // Choose Winner
+    $rootScope.$on('bestCard', function(event, data) {
+      console.warn("Sending Winner to Socket", data);
+      socket.emit('bestCard', data);
+    });
+    // Game Over
+    socket.on('finished', function() {
+        $rootScope.navigateTo('game.over');
+    });
     // Server Sent User Data
     socket.on('user', function(user){
        // console.log("Broadcasting Game Data Update", game);
@@ -66,7 +80,7 @@ app.service('Socket', function(socketFactory, $rootScope, ParseDB, DB, Cards) {
     });
     
     socket.on('notify', function( message ) {
-    window.toastr.success( 'success' );
+      window.toastr.success( 'success' );
     });
 
 
@@ -80,6 +94,12 @@ app.service('Socket', function(socketFactory, $rootScope, ParseDB, DB, Cards) {
       console.log("Getting Cards", settings)
       // Get Cards From Card Service
       $rootScope.$broadcast('getCards', settings);
+    });
+
+    socket.on('submission', function(submission){
+       // console.log("Broadcasting Game Data Update", game);
+       $rootScope.$broadcast('submission', submission);
+       window.toastr.success('Got Submission');
     });
 /*
     Window Factory Functions

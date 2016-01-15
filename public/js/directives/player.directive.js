@@ -1,4 +1,4 @@
-app.directive('playerNode', function(){
+app.directive('gamePlayer', function(){
     return {
         restrict: 'A',
         // transclude: true,
@@ -12,6 +12,10 @@ app.directive('playerNode', function(){
             // Game Settings
             $scope.game = Game.get();
             $scope.czarCard = Game.get().czarCard || {};
+            $scope.totalSubmissions = 0;
+
+            $scope.numOfAnswers = $scope.game.hasOwnProperty('czarCard') ? $scope.game.czarCard.length : 0;
+
 
             // User Is Czar?
             $scope.isCzar = function() {
@@ -26,15 +30,27 @@ app.directive('playerNode', function(){
                 $rootScope.navigateTo('home.join');
             }
 
-            $scope.$on('gameData', function(event, gameData){
-                // console.log("Updated Game Data", gameData);
-                $scope.game = gameData || Game.get();
-                $scope.czarCard = $scope.game.czarCard || {};
+            $scope.submit = function(index) {
+                if ($scope.numOfAnswers <= $scope.totalSubmissions) return window.toastr.warning('You have reached your submissions limit');
+                // Remove Card From Hand
+                var card = $scope.player.cards.splice(index, 1);
+                console.log("Submitting Card", card);
+                // Emit Card To Server
+                $rootScope.$broadcast('submit', {card: card[0], index: index });
+                $scope.totalSubmissions ++;
+            };
+
+            // $scope.$on('gameData', function(event, gameData){
+            //     // console.log("Updated Game Data", gameData);
+            //     $scope.game = gameData || Game.get();
+            //     $scope.czarCard = $scope.game.czarCard || {};
+            // });
+
+            $scope.$on('chooseWinner', function(event, winner) {
+                console.warn("Resettings totalSubmissions", winner);
+                // Reset Submissions
+                $scope.totalSubmissions = 0;
             });
-            
-            $scope.send = function() {
-                console.log("Send", arguments);
-            }
 
             // Window Factory
             window.cah = window.cah|| {};
