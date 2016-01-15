@@ -20,7 +20,7 @@ app.directive('gamePlayer', function(){
             // User Is Czar?
             $scope.isCzar = function() {
                 return $scope.game.czar === $scope.user.username ? true : false;
-            }
+            };
             // Leave Game
             $scope.leaveGame = function( game ) {
                 // Clear Game Data on Server
@@ -28,7 +28,7 @@ app.directive('gamePlayer', function(){
                 // console.warn("Emitting Leave Game", game)
                 // Navigate To Join Game Screen
                 $rootScope.navigateTo('home.join');
-            }
+            };
 
             $scope.submit = function(index) {
                 if ($scope.numOfAnswers <= $scope.totalSubmissions) return window.toastr.warning('You have reached your submissions limit');
