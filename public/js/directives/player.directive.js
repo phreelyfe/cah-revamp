@@ -10,11 +10,15 @@ app.directive('gamePlayer', function(){
                 return player.username === $rootScope.user.username ? player : null;
             })[0] : {};
             // Game Settings
-            $scope.game = Game.get();
+            $scope.game = Game.get() || {};
             $scope.czarCard = Game.get().czarCard || {};
             $scope.totalSubmissions = 0;
 
-            $scope.numOfAnswers = $scope.game.hasOwnProperty('czarCard') ? $scope.game.czarCard.length : 0;
+            $scope.numOfAnswers = Game.get().hasOwnProperty('czarCard') ? Game.get().czarCard.numAnswers : 0;
+            // Increase Submissions
+            Game.get().hasOwnProperty('submissions') ? $scope.game.submissions.forEach(function(player){
+               if (player.username === $scope.user.username)  $scope.totalSubmissions++;
+            }) : null;
 
 
             // User Is Czar?
@@ -40,16 +44,19 @@ app.directive('gamePlayer', function(){
                 $scope.totalSubmissions ++;
             };
 
-            // $scope.$on('gameData', function(event, gameData){
-            //     // console.log("Updated Game Data", gameData);
-            //     $scope.game = gameData || Game.get();
-            //     $scope.czarCard = $scope.game.czarCard || {};
-            // });
+            $scope.$on('gameData', function(event, gameData){
+                // console.log("Updated Game Data", gameData);
+                $scope.game = gameData || Game.get();
+                $scope.czarCard = $scope.game.czarCard || {};
+            });
 
-            $scope.$on('chooseWinner', function(event, winner) {
+            $scope.$on('winner', function(event, winner) {
                 console.warn("Resettings totalSubmissions", winner);
                 // Reset Submissions
                 $scope.totalSubmissions = 0;
+                $scope.game = Game.get();
+                $scope.czarCard = Game.get().czarCard;
+                $scope.game.submissions = [];
             });
 
             // Window Factory

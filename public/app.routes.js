@@ -92,7 +92,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                             
                         });
                         $scope.$on('games', function(event, games){
-                            // console.log("Got Games", games);
+                            console.log("Got Games", games);
                             // Reset Games Array
                             $scope.games.length = 0;
                             // Update Games
@@ -176,28 +176,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('game', {
             url: '/game',
             abstract: true,
-            controller: function($scope, Game) {
-                // $scope.submissions = {};
-
-                // if (Object.keys($scope.submissions).length <= 0) {
-                //     var submissions = Game.get().submissions || [];
-                //     // Create Submissions List
-                //     submissions.forEach(function( submission) {
-                //         $scope.submissions[ submission.username ] = $scope.submissions[ submission.username ] || [];
-                //         $scope.submissions[ submission.username ].push( submission.card );
-                //     });
-                // }
-
-                // $scope.$on('submission', function(event, submission) {
-                //     console.log("Completing Submissions Update", submission);
-                //     $scope.submissions[ submission.username ] = $scope.submissions[ submission.username ] || [];
-                //     $scope.submissions[ submission.username ].push( submission.card );
-                //     console.warn("Submissions", $scope.submissions);
-                // })
-
-                // Window Factory
-                window.cah = window.cah || {};
-                window.cah.scope.game = $scope;
+            controller: function($scope, Socket, Cards) {
             }
         })
         .state('game.lobby', {
@@ -300,13 +279,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
                         $scope.chooseWinner = function( card ) {
                             var winner = card[0];
-                            console.log("Winner Data", winner);
                             $rootScope.$broadcast('bestCard', {username: winner.username, cards: $scope.submissions[ winner.username ]});
-                            console.info("Winner Chosen: " + winner.username);
-                            
-                            // for(user in $scope.submissions) {
-                            //     $scope.submissions[ user ].length = 0;
-                            // }
+                            console.info("Winner Chosen: " + winner.username, winner);
                         };
 
                         $scope.$on('submission', function(event, submission) {
@@ -314,7 +288,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
                             $scope.submissions[ submission.username ] = $scope.submissions[ submission.username ] || [];
                             $scope.submissions[ submission.username ].push( {username: submission.username, card: submission.card } );
                             console.warn("Submissions", $scope.submissions);
-                        })
+                        });
+                        
+                         $scope.$on('winner', function(event, winner) {
+                            // Reset Submissions
+                            $scope.submissions = {};
+                        });
                         // Window Factory
                         window.cah = window.cah || {};
                         window.cah.scope.submissions = $scope;

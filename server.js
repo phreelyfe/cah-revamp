@@ -89,7 +89,15 @@ var CACHE = {
     };
     CACHE.updateUser = function( User ) {
         return CACHE.Users[ User.username ] = User;
-    }
+    };
+    CACHE.restartGame = function( name ) {
+        var Game = CACHE.games[ name ];
+        
+            Game.submissions = [];
+            Game.czar = "";
+            Game.czarCard = {};
+            
+    };
 // Get All Games From Parse
 Parse.find('Games', "", function(err, Games){
   // If Error Set Games to Empty Object
@@ -273,6 +281,8 @@ io.on('connection', function(socket) {
         }
         // Ref to Cache
         var cached = CACHE.games[ Game.name ] || {};
+        // Set Active Status False if no Players in Lobby
+        if (cached.players.length <= 0) cached.active = false;
         // Remove Player Node
         var playerIsSet = cached.hasOwnProperty('players') ? cached.players.some(function(player){ return player.username === user.username; }) : false;
         if (playerIsSet)
@@ -281,6 +291,13 @@ io.on('connection', function(socket) {
             socket.leave( cached.name );
         // Reset Cached Data
         CACHE.games[ cached.name ] = cached;
+        // Save State in Parse
+        Parse.update( 'Games', Game.objectId, CACHE.games[ cached.name ]).then(function(data) {
+            logger.info("Updated Game Successfully", data);
+            io.in( CACHE.gameRooms.default ).emit( 'games', CACHE.games );
+        }).catch(function(err, res){
+            logger.error("Errored Out", err, res);
+        });
         // Delete Stored Games
         user.set( 'game', {});
         // Update Local Game Data
@@ -411,8 +428,8 @@ io.on('connection', function(socket) {
     // Submit Card To Czar
     socket.on('submission', function( card, index ){
         console.log("Got Card From "+ user.username, card );
+        var removed;
         CACHE.games[ game.get().name ].players.forEach(function(player){
-            var removed;
             // Remove Card From Players Hand
             if (player.username === user.username) removed = player.cards.splice(index, 1);
         });
@@ -440,17 +457,23 @@ io.on('connection', function(socket) {
             player.score ++;
             // Determine if Round is complete
             if (player.score >= Game.maxPoints) finished = true;
-        } })
+        } });
         // Emit Winner Data to All Clients
         io.in( game.get().name ).emit('winner', { username: User.username, card: User.cards });
-        if (finished) return io.in( game.get().name ).emit('finished');
+        // If Game Is Finished
+        // Restart CACHED game and emit new gameData
+        if (finished) return io.in( game.get().name ).emit('finished'), 
+            CACHE.restartGame( game.get().name ), 
+            io.in( game.get().name ).emit('gameData', 
+            CACHE.games[ game.get().name ]);
+            
         // Choose New Czar
         var newCzar = Game.players.reduce(function(o, player, i, a){
             var totalPlayers = a.length - 1;
             // console.log(player.username + " is index " + i, "Is Czar?", player.isCzar, "Total Players Is " + totalPlayers, "Current Index Plus One", i+1);
             if (player.isCzar && (i + 1) <= totalPlayers) o['czarIs'] = a[i + 1].username;
             if (player.isCzar && (i + 1) > totalPlayers) o['czarIs'] = a[0].username;
-            return o
+            return o;
         }, {});
         logger.info('new czar needs to be set', newCzar);
         // Delete Submissions
@@ -632,9 +655,10 @@ io.on('connection', function(socket) {
         logger.warn("User Left", error);
         user.set('active', false);
         CACHE.updateUser( user.get() );
+        if (CACHE.Users.hasOwnProperty('""')) delete CACHE.Users['""'], logger.log('blank username deleted');
     });
 });
 // Listen To Traffic
 server.listen(PORT, function() {
-    logger.trace("Socket & Express Server Started on port %d in %s mode", this.address().port, app.settings.env)
+    logger.trace("Socket & Express Server Started on port %d in %s mode", this.address().port, app.settings.env);
 });

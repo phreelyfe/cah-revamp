@@ -1,4 +1,4 @@
-Parse.initialize("crvtKIS2lxtvpwrSxRGGLeiVEL8rxth2AeuLRkET", "g7jneHdlu6WbQo6NZeuvs8pA139qYKjp0SPsloPn");
+window.Parse.initialize("crvtKIS2lxtvpwrSxRGGLeiVEL8rxth2AeuLRkET", "g7jneHdlu6WbQo6NZeuvs8pA139qYKjp0SPsloPn");
 
 var app = angular.module('cah', ['ui.router', 'btford.socket-io', 'ngTouch']);
 
@@ -8,7 +8,7 @@ app.directive('isReady', [function () {
         link: function (scope, element, attrs) {
             // console.log("Is Ready Directive", [scope, element, attrs]);
         }
-    }
+    };
 }]);
 // Returns A Bubble For Each Player In Lobby
 app.filter('playerMarkers', function() {
@@ -18,7 +18,7 @@ app.filter('playerMarkers', function() {
             string += "•";
         }
         return string;
-    }
+    };
 });
 
 app.run(function($rootScope, $timeout, 
@@ -53,12 +53,12 @@ app.run(function($rootScope, $timeout,
             $state.go(state, {notify: false});
         }, 200);
         
-    }
+    };
     // Back Button Function
     $rootScope.goBack = function(){
         console.log(["Going Back In History"]);
         $window.history.back();
-    }
+    };
     // RootScope Listeners
     $rootScope.$on("$stateChangeStart", function(evt, to, toP, from, fromP) {
         // console.log("Start:   " + message(to, toP, from, fromP));
@@ -70,15 +70,15 @@ app.run(function($rootScope, $timeout,
         // console.log("Error:   " + message(to, toP, from, fromP), err);
     });
     // Message Client
-    function message(to, toP, from, fromP) { 
-        return from.name  + angular.toJson(fromP) + " -> " + to.name + angular.toJson(toP);
-    }
+    // function message(to, toP, from, fromP) { 
+    //     return from.name  + angular.toJson(fromP) + " -> " + to.name + angular.toJson(toP);
+    // }
 
 
     // Window Factory
     window.cah = window.cah || {};
     window.cah.scope = window.cah.scope || {};
-    window.cah.scope.rootscope = $rootScope
+    window.cah.scope.rootscope = $rootScope;
     window.cah.DB = DB;
     window.cah.Game = Game;
     window.cah.User = User;

@@ -1,8 +1,11 @@
 <div class="container">
     <h3 class="title">The Bigger <br>Blacker<br>App</h3>
     <div data-ng-click="navigateTo('home.create')" class="create-game primary-button">Create Game</div>
+    <div class="search-box input-item">
+        <input type="text" class="search-filter form-control" data-ng-model="search" placeholder="Search For A Game" />
+    </div>
     <ul class="active-games-list">
-        <li data-ng-repeat="game in games" class="active-game" data-ng-click="joinGame(game, $index)">
+        <li data-ng-repeat="game in games | filter: search" class="active-game" data-ng-click="joinGame(game, $index)">
             <div class="rating">Rated: {{ game.rating }}</div>
             <div class="game-name">
                 {{ game.name }}
