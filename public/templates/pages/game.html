@@ -1,10 +1,10 @@
 <!--
-    PLAYER POSITION TEMPLATE
+    PLAYER POSITION
 -->
 <h2 class="user-game-state" data-ng-show="isCzar()"><span class="username">{{ user.username }} </span><span class="user-state">[Czar]</span></h2>
 <h2 class="user-game-state" data-ng-show="!isCzar()"><span class="username">{{ user.username }} </span><span class="user-state">[Player]</span></h2>
 <!--
-    CZAR CARD TEMPLATE
+    CZAR CARD
 -->
 <ul class="czar-card">
 	<!-- Test isCzar {{ cardList }} -->
@@ -13,12 +13,9 @@
     <li class="card-text">{{ czarCard.text }}</li>
     <li class="card-expansion inactive">{{ czarCard.expansion }}</li>
 </ul>
-
 <!--
-    PLAYER SCREEN TEMPLATE
+    PLAYER SCREEN
 -->
-
-
 <div data-ng-show="!isCzar()" id="player">
     <ul game-player="{{!isCzar()}}" class="czar-card">
         <li class="card white" data-ng-class='{active:$first}'  

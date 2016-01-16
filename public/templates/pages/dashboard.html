@@ -1,10 +1,7 @@
 <div class="container">
     <div id="profile">
-        <!-- <img class="profile-pic" src="#" alt="profile image" /> -->
-        <!-- <div class="profile-halo"><img class="profile-pic" data-ng-src="{{ profilePic }}" alt=""></div> -->
         <div class="profile-halo"><img class="profile-pic" src="http://pickaface.net/includes/themes/clean/img/slide2.png" alt=""></div>
         <div class="profile-info">
-            <!-- <div id="firstname">{{ firstname }} {{ lastname }}</div> -->
             <div id="username">Username: {{ user.username }}</div>
             <div id="gameId">Current Game: {{ user.data.activeGame }}</div>
         </div>
@@ -13,7 +10,6 @@
     <div id="profileContent">
         <div id="friendList">
             <ul id="onlinePlayers">
-<!-- RAY: This is wehere we need data of current online players. No idea what the variables are to put in {{ }} -->
                 <div class="list-header">Current Online Players</div>
                 <li class="list-online-players" data-ng-repeat="user in users" data-ng-show="user.active">{{user.username}}</li>
             </ul>

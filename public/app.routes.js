@@ -92,7 +92,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                             
                         });
                         $scope.$on('games', function(event, games){
-                            console.log("Got Games", games);
+                            // console.log("Got Games", games);
                             // Reset Games Array
                             $scope.games.length = 0;
                             // Update Games
@@ -125,7 +125,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                     controller: function($scope, $rootScope, DB, Socket) {
                         // console.log("Dash Scope", [$rootScope, $scope]);
                         $scope.users = [];
-                        if ($scope.users.length <= 0 ) Socket.emit('users');
+                        if ($scope.users.length <= 0 ) $rootScope.$broadcast('emit', {emit: 'users', data: null });
                         $scope.resumeGame = function() {
                             var game = DB.getFromStorage('game') || {};
                             if (game.hasOwnProperty('name')) $rootScope.navigateTo('game.play');
@@ -133,7 +133,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                         // Get Users Online
                         $scope.$on('users', function( event, users) {
                             if (users.length === 0) return;
-                            console.log("USERS", users);
+                            // console.log("USERS", users);
                             $scope.users.length = 0;
                             for (var user in users) {
                                 $scope.users.push( users[ user ] );
@@ -231,15 +231,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
                                 $scope.players.push( player );
                             });
                         }
-                        // $scope.$on("$stateChangeStart", function(evt, to) {
-                        //     console.log("State Change Success", evt, to)
-                        // });
-                        // $scope.$on("$stateChangeSuccess", function(evt, to) {
-                        //     console.log("State Change Start", evt, to)
-                        // });
-                        // $scope.$on("$stateChangeError", function(evt, to) {
-                        //     console.warn("State Change Error", evt, to)
-                        // });
                         // Window Factory
                         window.cah = window.cah|| {};
                         window.cah.scope.lobby = $scope;

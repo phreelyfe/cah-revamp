@@ -1,4 +1,4 @@
-app.service('Socket', function(socketFactory, $rootScope, ParseDB, DB, Cards) {
+app.service('Socket', function(socketFactory, $rootScope, ParseDB, DB) {
 
     // Define Socket
     // var socket = $rootScope.authenticated ? socketFactory() : { on: function(){}, emit: function(){} };
@@ -22,7 +22,7 @@ app.service('Socket', function(socketFactory, $rootScope, ParseDB, DB, Cards) {
 
     // Extend RootScope Broadcasting to Socket
     $rootScope.$on('emit', function(event, emitter) {
-      console.warn("Emitting Event: " + emitter.emit, [emitter.data]);
+      // console.warn("Emitting Event: " + emitter.emit, [emitter.data]);
       socket.emit( emitter.emit, emitter.data );
     })
     // Server Sent User Data
@@ -81,7 +81,7 @@ app.service('Socket', function(socketFactory, $rootScope, ParseDB, DB, Cards) {
       // Get Cards From Card Service
       $rootScope.$broadcast('getCards', settings);
     });
-    
+
     // Submit an Answer Card
     $rootScope.$on('submit', function(event, submission) {
         console.warn("Sending Submission to Socket", submission);

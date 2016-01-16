@@ -1,4 +1,4 @@
-<div data-ng-hide="isCzar()" class="bottom-menu">
+<div class="bottom-menu">
     <a id="card-view" data-ui-sref-active="active" data-ng-click="navigateTo('game.play')" class="col-sm-4">
         <img class="games-icon" src="assets/icons/games.png" alt="games view icon" />
         <div class="menu-title">Cards</div>
@@ -7,16 +7,6 @@
         <img class="dashboard-icon" src="assets/icons/dashboard.png" alt="dashboard view icon" />
         <div class="menu-title">Submissions</div>
     </a>
-    <a id="list-view" data-ui-sref-active="active" data-ng-click="navigateTo('home.dashboard')" class="col-sm-4 active">
-        <img class="dashboard-icon" src="assets/icons/dashboard.png" alt="dashboard view icon" />
-        <div class="menu-title">Dashboard</div>
-    </a>
-</div>
-<div data-ng-hide="!isCzar()" class="bottom-menu">
-    <!-- <a id="card-view" data-ui-sref-active="active" data-ng-click="(game.listView)" class="col-sm-4">
-        <img class="games-icon" src="assets/icons/games.png" alt="games view icon" />
-        <div class="menu-title">You Are The Czar</div>
-    </a> -->
     <a id="list-view" data-ui-sref-active="active" data-ng-click="navigateTo('home.dashboard')" class="col-sm-4 active">
         <img class="dashboard-icon" src="assets/icons/dashboard.png" alt="dashboard view icon" />
         <div class="menu-title">Dashboard</div>
