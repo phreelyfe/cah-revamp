@@ -37,6 +37,24 @@ ul {
     margin: 5px;
 }
 
+/* ANGULAR ANIMATIONS*/
+.animation.ng-enter {
+  /*transition:0.4s linear all;*/
+  animation: fadeIn 0.6s;
+  opacity: 0;
+}
+.animation.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+.animation.ng-leave {
+  /*transition:0s linear all;*/
+  animation: 0s; 
+  opacity:1;
+}
+.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
 #status-message {
     position: absolute;
     top: 25%;

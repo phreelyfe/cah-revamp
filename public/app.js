@@ -1,6 +1,6 @@
 window.Parse.initialize("crvtKIS2lxtvpwrSxRGGLeiVEL8rxth2AeuLRkET", "g7jneHdlu6WbQo6NZeuvs8pA139qYKjp0SPsloPn");
 
-var app = angular.module('cah', ['ui.router', 'btford.socket-io', 'ngTouch']);
+var app = angular.module('cah', ['ui.router', 'btford.socket-io', 'ngTouch', 'ngAnimate']);
 
 app.directive('isReady', [function () {
     return {
